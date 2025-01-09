@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Generator</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Task Generator</h1>
+    <form id="taskForm" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="pdfFile">Upload PDF (optional):</label>
+            <input type="file" id="pdfFile" name="pdfFile" accept=".pdf">
+        </div>
+        <div class="form-group">
+            <label for="input1">Input 1:</label>
+            <input type="text" id="input1" name="input1" required>
+        </div>
+        <div class="form-group">
+            <label for="input2">Input 2:</label>
+            <input type="text" id="input2" name="input2" required>
+        </div>
+        <div class="form-group">
+            <label for="input3">Input 3:</label>
+            <input type="text" id="input3" name="input3" required>
+        </div>
+        <button type="submit">Generate Tasks</button>
+    </form>
+    <div id="result"></div>
+
+    <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
