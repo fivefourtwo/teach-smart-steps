@@ -3,58 +3,83 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
     margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
 }
 
 input[type="text"], input[type="file"] {
     width: 100%;
     padding: 8px;
-    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+input[type="text"]:focus {
+    border-color: #FA4604;
+    outline: none;
+    box-shadow: 0 0 5px rgba(250, 70, 4, 0.2);
 }
 
 input[type="file"] {
     padding: 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
 }
 
 button {
     background-color: #FA4604;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 20px;
 }
 
 button:hover {
     background-color: #CB3700;
 }
 
-#result {
-    margin-top: 20px;
-    white-space: pre-line;
+.result-container {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f8f8f8;
 }
-
-.error {
-    color: red;
-}
-
-/* ... (previous styles remain the same) ... */
 
 .pdf-info {
-    background-color: #f5f5f5;
+    background-color: #fff;
     padding: 15px;
     border-radius: 4px;
     margin-bottom: 20px;
+    border: 1px solid #ddd;
 }
 
 .pdf-info h4 {
@@ -64,7 +89,7 @@ button:hover {
 
 .pdf-preview {
     background-color: white;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
     margin-top: 10px;
@@ -74,15 +99,10 @@ button:hover {
     font-size: 14px;
 }
 
-details {
+.error {
+    color: #D32F2F;
+    padding: 10px;
+    background-color: #FFEBEE;
+    border-radius: 4px;
     margin-top: 10px;
-}
-
-summary {
-    cursor: pointer;
-    color: #4CAF50;
-}
-
-summary:hover {
-    text-decoration: underline;
 }

@@ -26,20 +26,43 @@ def allowed_file(filename):
 def extract_text_from_pdf(file_path):
     text = ""
     try:
-        # Open the PDF file with PyMuPDF
         doc = fitz.open(file_path)
-        
-        # Iterate through pages
         for page_num in range(len(doc)):
             page = doc[page_num]
-            # Extract text from the page with improved formatting
             page_text = page.get_text()
             text += f"[Page {page_num + 1}]:\n{page_text}\n\n"
-            
         doc.close()
     except Exception as e:
         print(f"Error reading PDF: {str(e)}")
     return text
+
+def create_prompt(form_data, pdf_text=""):
+    return f"""Erstelle 3 verschiedene Aufgaben für die {form_data.get('grade', '[KLASSENSTUFE]')}, 
+    die im Fach {form_data.get('subject', '[FACH]')} eingesetzt werden sollen. 
+    
+    {f'Die Aufgabe soll das folgende Dokument berücksichtigen:\n{pdf_text}\n' if pdf_text else ''}
+    
+    Die Aufgabe soll sich auf die Kompetenz {form_data.get('curriculum_competency', '[LEHRPLANKOMPETENZ]')} beziehen. 
+    Aktuell wird in diesem Fach das Thema {form_data.get('current_topic', '[THEMA]')} besprochen. 
+    Die Aufgabe soll in {form_data.get('social_form', '[SOZIALFORM]')} durchgeführt werden 
+    und ungefähr {form_data.get('time', '[ZEIT]')} in Anspruch nehmen.
+
+    Berücksichtige außerdem die Medienbildungs-Kompetenz {form_data.get('media_competency', '[MEDIENBILDUNGS-KOMPETENZ]')} 
+    und wähle das Aufgabenformat {form_data.get('task_format', '[AUFGABENFORMAT]')}.
+
+    Interessen der Schüler: {form_data.get('student_interests', '[INTERESSEN DER SCHÜLER]')}
+    Digitale Tools: {form_data.get('digital_tools', '[DIGITALE TOOLS]')}
+
+    Die Aufgabe sollte klar formulierte Lernziele haben, sowohl für das Schulfach als auch die Medienbildung. 
+    Achte darauf, dass jeder Aufgabe ein "Inhalt" aus dem Lehrplan Medienbildung zugeordnet werden kann.
+
+    Formatiere den Output für jede Aufgabe wie folgt:
+    Aufgabe X:
+    - Schulfach, Thema, Sozialform, Zeit
+    - Lernziel des Schulfachs
+    - Inhalt aus dem Medienbildungs-Lehrplan
+    - Aufgabenstellung für die Schüler
+    - Digitale Tools: (Ja/Nein/Wahlweise)"""
 
 @app.route('/', methods=['GET'])
 def home():
@@ -51,9 +74,18 @@ def generate_tasks():
         return jsonify({'error': 'Only POST method is allowed'}), 405
         
     try:
-        input1 = request.form.get('input1', '')
-        input2 = request.form.get('input2', '')
-        input3 = request.form.get('input3', '')
+        form_data = {
+            'grade': request.form.get('grade', ''),
+            'subject': request.form.get('subject', ''),
+            'curriculum_competency': request.form.get('curriculum_competency', ''),
+            'current_topic': request.form.get('current_topic', ''),
+            'social_form': request.form.get('social_form', ''),
+            'time': request.form.get('time', ''),
+            'media_competency': request.form.get('media_competency', ''),
+            'task_format': request.form.get('task_format', ''),
+            'student_interests': request.form.get('student_interests', ''),
+            'digital_tools': request.form.get('digital_tools', '')
+        }
 
         pdf_text = ""
         pdf_info = {"processed": False, "filename": None, "page_count": 0}
@@ -68,36 +100,29 @@ def generate_tasks():
                 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
                 
                 file.save(file_path)
-                
-                # Get PDF information using PyMuPDF
                 doc = fitz.open(file_path)
                 pdf_info["processed"] = True
                 pdf_info["page_count"] = len(doc)
                 
-                # Extract text
                 pdf_text = extract_text_from_pdf(file_path)
                 pdf_info["char_count"] = len(pdf_text)
                 
                 doc.close()
                 os.remove(file_path)
 
-        prompt = f"""Erstelle auf der Grundlage der folgenden Eingaben und des PDF-Inhalts eine Aufgabenanleitung für einen Grundschullehrer :
-        Input 1: {input1}
-        Input 2: {input2}
-        Input 3: {input3}
-        
-        PDF Content:
-        {pdf_text if pdf_text else "No PDF provided"}
-        
-        Bitte gebe eine umsetzbare Aufgabn an, die sowohl die Eingabefelder als auch alle relevanten Informationen aus der PDF-Datei enthalten."""
+        system_prompt = """Du bist ein KI-Modell, das Lehrkräften dabei hilft, individuelle und zielgerichtete Aufgaben 
+        für den Unterricht zu erstellen. Dein Ziel ist es, Aufgaben zu generieren, die nicht nur den offiziellen Lehrplänen 
+        der jeweiligen Klassenstufe entsprechen, sondern auch die im Lehrplan für Medienbildung enthaltenen Kompetenzen fördern."""
+
+        user_prompt = create_prompt(form_data, pdf_text)
 
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "Sie sind ein hilfreicher Aufgabengenerator. Erstellen Sie spezifische, umsetzbare Aufgaben auf der Grundlage der vorgegebenen Eingaben und PDF-Inhalte."},
-                {"role": "user", "content": prompt}
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
             ],
-            max_tokens=500
+            max_tokens=1000
         )
 
         tasks = response.choices[0].message.content
