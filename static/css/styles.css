@@ -106,3 +106,54 @@ button:hover {
     border-radius: 4px;
     margin-top: 10px;
 }
+
+/* ... (previous styles remain the same) ... */
+
+.input-with-suggestion {
+    display: flex;
+    gap: 10px;
+}
+
+.input-with-suggestion input {
+    flex: 1;
+}
+
+.suggestion-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+    width: auto;
+    margin-top: 0;
+}
+
+.suggestion-btn:hover {
+    background-color: #388E3C;
+}
+
+.suggestion-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4CAF50;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

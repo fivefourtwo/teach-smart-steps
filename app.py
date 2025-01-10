@@ -68,6 +68,59 @@ def create_prompt(form_data, pdf_text=""):
 def home():
     return render_template('index.html')
 
+# Generate a suggestion for a given field
+@app.route('/generate-suggestion', methods=['POST'])
+def generate_suggestion():
+    try:
+        field = request.json.get('field')
+        context = {
+            'grade': request.json.get('grade', ''),
+            'subject': request.json.get('subject', ''),
+            'current_topic': request.json.get('current_topic', '')
+        }
+
+        prompts = {
+            'social_form': f"""Schlage eine passende Sozialform für den Unterricht vor.
+                Berücksichtige dabei:
+                - Klassenstufe: {context['grade']}
+                - Fach: {context['subject']}
+                - Aktuelles Thema: {context['current_topic']}
+                Gib nur die Sozialform zurück, ohne weitere Erklärungen.""",
+            
+            'task_format': f"""Schlage ein passendes Aufgabenformat für den Unterricht vor.
+                Berücksichtige dabei:
+                - Klassenstufe: {context['grade']}
+                - Fach: {context['subject']}
+                - Aktuelles Thema: {context['current_topic']}
+                Gib nur das Aufgabenformat zurück, ohne weitere Erklärungen.""",
+            
+            'digital_tools': f"""Schlage ein passendes digitales Tool für den Unterricht vor.
+                Berücksichtige dabei:
+                - Klassenstufe: {context['grade']}
+                - Fach: {context['subject']}
+                - Aktuelles Thema: {context['current_topic']}
+                Gib nur den Namen des Tools zurück, ohne weitere Erklärungen."""
+        }
+
+        if field not in prompts:
+            return jsonify({'error': 'Invalid field'}), 400
+
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "Du bist ein hilfreicher Assistent für Lehrkräfte."},
+                {"role": "user", "content": prompts[field]}
+            ],
+            max_tokens=50
+        )
+
+        suggestion = response.choices[0].message.content.strip()
+        return jsonify({'suggestion': suggestion})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+# Generate tasks based on the form data and optional PDF file
 @app.route('/generate-tasks', methods=['GET', 'POST'])
 def generate_tasks():
     if request.method != 'POST':
@@ -115,6 +168,7 @@ def generate_tasks():
         der jeweiligen Klassenstufe entsprechen, sondern auch die im Lehrplan für Medienbildung enthaltenen Kompetenzen fördern."""
 
         user_prompt = create_prompt(form_data, pdf_text)
+        print(user_prompt)
 
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
