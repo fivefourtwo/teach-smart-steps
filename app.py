@@ -5,6 +5,8 @@ import os
 import fitz  # PyMuPDF
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
+import csv
+from io import StringIO
 
 # Load environment variables
 load_dotenv()
@@ -19,6 +21,30 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Media competency plan as a string (CSV format)
+MEDIA_COMPETENCY_PLAN = '''Thema,Unterpunkte,Inhaltsbezogene Kompetenzen
+Grundlagen: Medien kennenlernen,Was sind Medien?; Medien früher und heute; Medien sind vielfältig; Medien nutzen,"Unterschiedliche Medienarten (Print, digital, Audio, Video) erkennen.; Medienformate verstehen und benennen."
+Grundlagen: Einführung Internet,Was ist das Internet?; Internetverbindung; Der Browser,Internet als Informationsquelle erkennen.; Browserfunktionen verstehen und anwenden.
+Sicherheit: Sicher im Internet - Digitale Fußabdrücke,Was ist ein digitaler Fußabdruck?; Wie hinterlassen wir Spuren im Internet?; Verantwortung im Umgang mit eigenen und fremden Daten; Gefahren im Internet; Geräte und Datenschutz; Online-Spiele und Cybergrooming; Viren und Downloads,Den digitalen Fußabdruck und dessen Auswirkungen auf die Privatsphäre verstehen.; Grundlegendes Verständnis von Online-Gefahren und Datenschutz entwickeln.; Werbung und ihre Manipulation verstehen.
+Sicherheit: Soziale Netzwerke,Was sind soziale Netzwerke?; Profil erstellen; Gefahren und Risiken; Cybermobbing,Soziale Netzwerke und ihre Funktionen verstehen.; Das Erstellen eines Profils und die damit verbundenen Risiken.
+Beobachten: Werbung und Konsum,Werbeformen: Wo begegnen wir Werbung im Alltag?; Werbung in sozialen Netzwerken; Werbung und Kinder: Wie beeinflusst uns Werbung?,Werbeziele und -methoden verstehen.; Werbung als Einflussfaktor auf Konsumverhalten erkennen.
+Beobachten: Medienanalyse – Was steckt hinter den Medien,"Verantwortung von Medienmachern; Fake News und Desinformation; Medienanalyse: Texte, Bilder, Videos kritisch hinterfragen",Verantwortungsvolle Mediennutzung verstehen.; Fake News erkennen.
+Medien und ihre Wirkung,Wie beeinflussen Medien unser Denken und Verhalten?; Der Umgang mit Bildern und Sprache; Auswirkungen von zu viel Bildschirmzeit,Medieninhalte und deren Einfluss auf die Wahrnehmung erkennen.; Den eigenen Umgang mit Bildschirmzeit reflektieren.'''
+
+
+def load_media_competencies():
+    """Load media competencies from the CSV string into a structured format"""
+    competencies = []
+    csv_file = StringIO(MEDIA_COMPETENCY_PLAN)
+    csv_reader = csv.DictReader(csv_file)
+    for row in csv_reader:
+        competencies.append({
+            'theme': row['Thema'],
+            'subtopics': [s.strip() for s in row['Unterpunkte'].split(';')],
+            'competencies': [c.strip() for c in row['Inhaltsbezogene Kompetenzen'].split(';')]
+        })
+    return competencies
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -79,39 +105,59 @@ def generate_suggestion():
             'current_topic': request.json.get('current_topic', '')
         }
 
-        prompts = {
-            'social_form': f"""Schlage eine passende Sozialform für den Unterricht vor.
-                Berücksichtige dabei:
-                - Klassenstufe: {context['grade']}
-                - Fach: {context['subject']}
-                - Aktuelles Thema: {context['current_topic']}
-                Gib nur die Sozialform zurück, ohne weitere Erklärungen.""",
+        if field == 'media_competency':
+            # Load the competencies
+            competencies = load_media_competencies()
             
-            'task_format': f"""Schlage ein passendes Aufgabenformat für den Unterricht vor.
-                Berücksichtige dabei:
-                - Klassenstufe: {context['grade']}
-                - Fach: {context['subject']}
-                - Aktuelles Thema: {context['current_topic']}
-                Gib nur das Aufgabenformat zurück, ohne weitere Erklärungen.""",
+            prompt = f"""Wähle eine passende Medienkompetenz aus dem folgenden Lehrplan aus.
             
-            'digital_tools': f"""Schlage ein passendes digitales Tool für den Unterricht vor.
-                Berücksichtige dabei:
-                - Klassenstufe: {context['grade']}
-                - Fach: {context['subject']}
-                - Aktuelles Thema: {context['current_topic']}
-                Gib nur den Namen des Tools zurück, ohne weitere Erklärungen."""
-        }
+            Kontext:
+            - Klassenstufe: {context['grade']}
+            - Fach: {context['subject']}
+            - Aktuelles Thema: {context['current_topic']}
+            
+            Verfügbare Kompetenzen:
+            {MEDIA_COMPETENCY_PLAN}
+            
+            Wähle eine passende inhaltsbezogene Kompetenz aus und gib sie exakt so zurück, wie sie im Plan steht.
+            Berücksichtige dabei den Zusammenhang zum Fach und Thema.
+            Gib nur die ausgewählte Kompetenz zurück, ohne weitere Erklärungen."""
 
-        if field not in prompts:
+        else:
+            prompts = {
+                'social_form': f"""Schlage eine passende Sozialform für den Unterricht vor.
+                    Berücksichtige dabei:
+                    - Klassenstufe: {context['grade']}
+                    - Fach: {context['subject']}
+                    - Aktuelles Thema: {context['current_topic']}
+                    Gib nur die Sozialform zurück, ohne weitere Erklärungen.""",
+                
+                'task_format': f"""Schlage ein passendes Aufgabenformat für den Unterricht vor.
+                    Berücksichtige dabei:
+                    - Klassenstufe: {context['grade']}
+                    - Fach: {context['subject']}
+                    - Aktuelles Thema: {context['current_topic']}
+                    Gib nur das Aufgabenformat zurück, ohne weitere Erklärungen.""",
+                
+                'digital_tools': f"""Schlage ein passendes digitales Tool für den Unterricht vor.
+                    Berücksichtige dabei:
+                    - Klassenstufe: {context['grade']}
+                    - Fach: {context['subject']}
+                    - Aktuelles Thema: {context['current_topic']}
+                    Gib nur den Namen des Tools zurück, ohne weitere Erklärungen."""
+            }
+            prompt = prompts.get(field)
+
+        if not prompt:
             return jsonify({'error': 'Invalid field'}), 400
 
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "Du bist ein hilfreicher Assistent für Lehrkräfte."},
-                {"role": "user", "content": prompts[field]}
+                {"role": "user", "content": prompt}
             ],
-            max_tokens=50
+            max_tokens=100
         )
 
         suggestion = response.choices[0].message.content.strip()

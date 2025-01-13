@@ -52,7 +52,13 @@
 
             <div class="form-group">
                 <label for="media_competency">Medienbildungs-Kompetenz:</label>
-                <input type="text" id="media_competency" name="media_competency">
+                <div class="input-with-suggestion">
+                    <input type="text" id="media_competency" name="media_competency">
+                    <button type="button" class="suggestion-btn" data-field="media_competency">
+                        Vorschlag
+                    </button>
+                </div>
+                <small class="field-hint">Klicken Sie auf 'Vorschlag' für eine passende Kompetenz aus dem Lehrplan.</small>
             </div>
 
             <div class="form-group">
