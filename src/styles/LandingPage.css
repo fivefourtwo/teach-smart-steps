@@ -1,0 +1,297 @@
+/* Base styles */
+body {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+}
+
+/* Layout styles */
+.landing-container {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 80px;
+  background: #E5E5E5;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Header styles */
+.header {
+  align-self: stretch;
+  padding: 32px;
+  background: #E5E5E5;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo styles */
+.logo-container {
+  width: 161px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  width: 35px;
+  height: 35px;
+  position: relative;
+  background: #E5E5E5;
+  border-radius: 2.95px;
+  overflow: hidden;
+}
+
+.logo-text {
+  padding: 0.5px 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  color: #1E1E1E;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 17px;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  height: 32px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.sign-in-btn {
+  width: 76px;
+  padding: 12px;
+  background: #1E1E1E;
+  color: #E5E5E5;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.register-btn {
+  width: 89px;
+  padding: 12px;
+  border: 1px solid #1E1E1E;
+  color: #1E1E1E;
+  font-size: 16px;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Main content styles */
+.main-content {
+  align-self: stretch;
+  padding: 0 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* Hero section */
+.hero-section {
+  align-self: stretch;
+  height: 80vh;
+  /* padding: 320px 0; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.create-task-btn {
+  padding: 24px;
+  color: #1E1E1E;
+  border: 1px solid #1E1E1E;
+  background: transparent;
+  cursor: pointer;
+  text-align: center;
+}
+
+.create-task-btn span {
+  font-size: 16px;
+}
+
+.create-task-btn .bold {
+  font-weight: 700;
+}
+
+/* Feature Button styles */
+.feature-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.feature-button {
+    display: flex;
+    width: 320px;
+    height: 50px;
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #1E1E1E;
+}
+
+.feature-text {
+  color: #1E1E1E;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Video Section styles */
+.video-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.section-title {
+  width: 568.54px;
+  color: #1E1E1E;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.video-container {
+  width: 1120px;
+  height: 582px;
+  border: 1px solid #1E1E1E;
+  position: relative;
+}
+
+/* Feature Section styles */
+.feature-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.features-container {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.feature-item {
+  display: flex;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+.feature-image {
+  width: 318.65px;
+  height: 309.37px;
+  border: 1px solid #1E1E1E;
+}
+
+.feature-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.feature-title {
+  width: 314.49px;
+  color: #1E1E1E;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.feature-description {
+  width: 372.55px;
+  color: #1E1E1E;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Example Section styles */
+.example-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.example-content {
+  display: flex;
+  gap: 40px;
+}
+
+.example-image {
+  width: 100px;
+  height: 97.08px;
+  border: 1px solid #1E1E1E;
+}
+
+.example-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.example-title {
+  width: 568.54px;
+  color: #1E1E1E;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.example-info {
+  display: flex;
+  gap: 20px;
+}
+
+.info-item {
+  padding: 12px;
+  border: 1px solid #1E1E1E;
+  color: #1E1E1E;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.button-text {
+  color: #1E1E1E;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.discover-more {
+  height: 50px;
+  padding: 10px 20px;
+  border: 1px solid #1E1E1E;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  cursor: pointer;
+  color: #1E1E1E;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* FAQ Button styles */
+.faq-button {
+  width: 340px;
+  height: 50px;
+  padding: 10px 20px;
+  border: 1px solid #1E1E1E;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Divider styles */
+.divider {
+  align-self: stretch;
+  height: 0;
+  border: 1px dotted #1E1E1E;
+} 
