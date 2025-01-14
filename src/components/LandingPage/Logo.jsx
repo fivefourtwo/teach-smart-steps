@@ -8,7 +8,8 @@ const Logo = () => (
       <div className="logo-wave-4"></div>
     </div>
     <div className="logo-text">
-      Teach <br/>Smart Steps
+      Teach <br/>
+      <span style={{ color: '#FA4604' }}>Smart Steps</span>
     </div>
   </div>
 );
