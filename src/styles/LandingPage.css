@@ -16,82 +16,6 @@ body {
   align-items: center;
 }
 
-/* Header styles */
-.header {
-  align-self: stretch;
-  padding: 32px;
-  background: #E5E5E5;
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Logo styles */
-.logo-container {
-  width: 161px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 8px;
-}
-
-.logo {
-  width: 35px;
-  height: 35px;
-  position: relative;
-  background: #E5E5E5;
-  border-radius: 2.95px;
-  overflow: hidden;
-}
-
-.logo-text {
-  padding: 0.5px 12px;
-  border-radius: 8px;
-  overflow: hidden;
-  color: #1E1E1E;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 17px;
-}
-
-/* Navigation buttons */
-.nav-buttons {
-  height: 32px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
-}
-
-.sign-in-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 32px;
-  padding: 12px;
-  background: #1E1E1E;
-  color: #E5E5E5;
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-}
-
-.register-btn {
-  display: flex;
-  height: 32px;
-  padding: 12px;
-  border: 1px solid #FA4604;
-  color: #1E1E1E;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  background: transparent;
-  cursor: pointer;
-}
-
 /* Main content styles */
 .main-content {
   align-self: stretch;
@@ -114,47 +38,15 @@ body {
 }
 
 .create-task-btn {
-  padding: 11px;
+  padding: 12px;
   border-radius: 56px;
-  border: 1px solid #FA8C44;
+  border: solid #FA8C44;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   background: transparent;
   cursor: pointer;
-}
-
-.create-task-btn-inner {
-  width: 180px;
-  height: 180px;
-  background: #FFFDF4;
-  border-radius: 48px;
-  border: 2px solid #FA4604;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.create-task-btn-text {
-  width: 154px;
-  text-align: center;
-}
-
-.create-task-btn-text span {
-  font-size: 16px;
-  font-family: 'Manrope', sans-serif;
-}
-
-.create-task-btn-text .regular {
-  color: #FA4604;
-  font-weight: 500;
-}
-
-.create-task-btn-text .bold {
-  color: #2F4858;
-  font-weight: 700;
 }
 
 /* Feature Button styles */

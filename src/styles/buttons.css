@@ -1,0 +1,92 @@
+/* Primary Button */
+.btn-primary {
+  display: flex;
+  height: 32px;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  background: #1E1E1E;
+  color: #FFFDF4;
+  font-family: Manrope;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  color: #C7C5BC;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  display: flex;
+  height: 32px;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #FA4604;
+  color: #1E1E1E;
+  font-family: Manrope;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(250, 70, 4, 0.2);
+}
+
+/* Create Task Button */
+.create-task-btn {
+  display: inline-flex;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 56px;
+  background: transparent;
+  cursor: pointer;
+  border: 1px solid #FA8C44;
+}
+
+.create-task-btn-inner {
+  width: 180px;
+  height: 180px;
+  background: #FFFDF4;
+  border-radius: 48px;
+  border: 2px solid #FA4604;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.create-task-btn-text {
+  width: 154px;
+  text-align: center;
+}
+
+.create-task-btn-text span {
+  font-size: 16px;
+  font-family: 'Manrope', sans-serif;
+}
+
+.create-task-btn-text .regular {
+  color: #FA4604;
+  font-weight: 500;
+}
+
+.create-task-btn-text .bold {
+  color: #2F4858;
+  font-weight: 700;
+}
+
+.create-task-btn:hover {
+  background: rgba(250, 70, 4, 0.2);
+} 
