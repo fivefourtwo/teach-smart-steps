@@ -17,20 +17,20 @@ body, html, #root {
 .page-container {
   width: 100%;
   min-height: 100vh;
-  background: #E5E5E5;
+  background: #FFFDF4;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .content-wrapper {
-  width: 100%;
   max-width: 1440px;
-  padding-left: 160px;
-  padding-right: 160px;
+  /* padding-left: 160px;
+  padding-right: 160px; */
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .choice-container {
@@ -48,6 +48,7 @@ body, html, #root {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  position: relative;
 }
 
 .choice-title {
@@ -57,6 +58,7 @@ body, html, #root {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    cursor: default;
 }
 
 .orange-text {
@@ -99,4 +101,23 @@ body, html, #root {
     padding: 8px 16px;
     font-size: 16px;
   }
+} 
+
+.preview-popup.top-left {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+.preview-popup.bottom-right {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+foreignObject:hover + .preview-popup {
+  opacity: 1;
+  visibility: visible;
 } 

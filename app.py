@@ -164,6 +164,7 @@ def generate_suggestion():
         return jsonify({'suggestion': suggestion})
 
     except Exception as e:
+        print(f"Error in generate-suggestion: {str(e)}")
         return jsonify({'error': str(e)}), 500
     
 # Generate tasks based on the form data and optional PDF file
@@ -246,3 +247,5 @@ if __name__ == '__main__':
         os.makedirs(dir_path, exist_ok=True)
     
     app.run(debug=True)
+
+print(f"API Key loaded: {openai.api_key[:7]}...")  # Only prints first 7 chars for security

@@ -89,4 +89,39 @@
 
 .create-task-btn:hover {
   background: rgba(250, 70, 4, 0.2);
+}
+
+.auto-fill-btn {
+  display: inline-flex;
+  padding: 12px;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.auto-fill-btn:hover {
+  background-color: rgba(116, 78, 151, 0.1);
+}
+
+.auto-fill-btn-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auto-fill-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.auto-fill-btn span {
+  color: #744E97;
+  font-size: 16px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
 } 

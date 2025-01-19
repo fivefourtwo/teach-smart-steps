@@ -11,7 +11,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleCreateTask = () => {
-    navigate('/task-generator');
+    navigate('/input');
   };
 
   return (

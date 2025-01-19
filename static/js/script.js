@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('pdfFile', pdfFile);
             }
 
-            const response = await fetch('/generate-tasks', {
+            const response = await fetch('http://127.0.0.1:5000/generate-tasks', {
                 method: 'POST',
                 body: formData
             });
