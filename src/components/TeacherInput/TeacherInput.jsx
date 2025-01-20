@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from '../common/Header';
 import '../../styles/TeacherInput.css';
 import AutoFillButton from '../common/AutoFillButton';
+import { useNavigate } from 'react-router-dom';
 
 const TeacherInput = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const TeacherInput = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -71,12 +73,10 @@ const TeacherInput = () => {
     try {
       const formDataToSend = new FormData();
       
-      // Append all form fields
       Object.entries(formData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
       
-      // Append PDF if exists
       if (pdfFile) {
         formDataToSend.append('pdfFile', pdfFile);
       }
@@ -86,12 +86,20 @@ const TeacherInput = () => {
         body: formDataToSend
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
-      setResult(data);
+      if (data.success) {
+        navigate('/task-summaries', { 
+          state: { 
+            summaries: data.summaries,
+            sessionId: data.session_id
+          }
+        });
+      } else {
+        setResult({ 
+          success: false, 
+          error: data.error 
+        });
+      }
     } catch (error) {
       console.error('Error:', error);
       setResult({ 

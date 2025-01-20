@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import openai
 from datetime import datetime
 import os
@@ -7,6 +7,8 @@ from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 import csv
 from io import StringIO
+import uuid
+from flask_cors import CORS
 
 # Load environment variables
 load_dotenv()
@@ -15,6 +17,7 @@ app = Flask(__name__,
     static_url_path='/static',
     static_folder='static',
     template_folder='templates')
+CORS(app)
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
@@ -32,6 +35,7 @@ Beobachten: Werbung und Konsum,Werbeformen: Wo begegnen wir Werbung im Alltag?; 
 Beobachten: Medienanalyse – Was steckt hinter den Medien,"Verantwortung von Medienmachern; Fake News und Desinformation; Medienanalyse: Texte, Bilder, Videos kritisch hinterfragen",Verantwortungsvolle Mediennutzung verstehen.; Fake News erkennen.
 Medien und ihre Wirkung,Wie beeinflussen Medien unser Denken und Verhalten?; Der Umgang mit Bildern und Sprache; Auswirkungen von zu viel Bildschirmzeit,Medieninhalte und deren Einfluss auf die Wahrnehmung erkennen.; Den eigenen Umgang mit Bildschirmzeit reflektieren.'''
 
+task_storage = {}  # In-memory storage (consider using a database in production)
 
 def load_media_competencies():
     """Load media competencies from the CSV string into a structured format"""
@@ -63,32 +67,31 @@ def extract_text_from_pdf(file_path):
     return text
 
 def create_prompt(form_data, pdf_text=""):
-    return f"""Erstelle 3 verschiedene Aufgaben für die {form_data.get('grade', '[KLASSENSTUFE]')}, 
-    die im Fach {form_data.get('subject', '[FACH]')} eingesetzt werden sollen. 
-    
-    {f'Die Aufgabe soll das folgende Dokument berücksichtigen:\n{pdf_text}\n' if pdf_text else ''}
-    
-    Die Aufgabe soll sich auf die Kompetenz {form_data.get('curriculum_competency', '[LEHRPLANKOMPETENZ]')} beziehen. 
-    Aktuell wird in diesem Fach das Thema {form_data.get('current_topic', '[THEMA]')} besprochen. 
-    Die Aufgabe soll in {form_data.get('social_form', '[SOZIALFORM]')} durchgeführt werden 
-    und ungefähr {form_data.get('time', '[ZEIT]')} in Anspruch nehmen.
+    prompt = f"""Erstelle eine Unterrichtsaufgabe mit folgenden Vorgaben:
 
-    Berücksichtige außerdem die Medienbildungs-Kompetenz {form_data.get('media_competency', '[MEDIENBILDUNGS-KOMPETENZ]')} 
-    und wähle das Aufgabenformat {form_data.get('task_format', '[AUFGABENFORMAT]')}.
+Fach: {form_data.get('subject', '')}
+Klassenstufe: {form_data.get('grade', '')}
+Lehrplankompetenz: {form_data.get('curriculum_competency', '')}
+Aktuelles Thema: {form_data.get('current_topic', '')}
+Sozialform: {form_data.get('social_form', '')}
+Zeit: {form_data.get('time', '')}
+Medienbildungs-Kompetenz: {form_data.get('media_competency', '')}
+Aufgabenformat: {form_data.get('task_format', '')}
+Schülerinteressen: {form_data.get('student_interests', '')}
+Digitale Tools: {form_data.get('digital_tools', '')}
 
-    Interessen der Schüler: {form_data.get('student_interests', '[INTERESSEN DER SCHÜLER]')}
-    Digitale Tools: {form_data.get('digital_tools', '[DIGITALE TOOLS]')}
+Die Aufgabe MUSS in folgender Struktur erstellt werden:
+1. Ein prägnanter Titel, der das Hauptthema erfasst
+2. Ein kurzer Untertitel, der die Aktivität beschreibt
+3. Drei konkrete Lernziele
+4. Eine Liste der benötigten Materialien und Vorbereitungsschritte
+5. Eine detaillierte, schrittweise Beschreibung der Durchführung
 
-    Die Aufgabe sollte klar formulierte Lernziele haben, sowohl für das Schulfach als auch die Medienbildung. 
-    Achte darauf, dass jeder Aufgabe ein "Inhalt" aus dem Lehrplan Medienbildung zugeordnet werden kann.
+{f'Berücksichtige dabei folgende Informationen aus dem PDF-Dokument: {pdf_text}' if pdf_text else ''}
 
-    Formatiere den Output für jede Aufgabe wie folgt:
-    Aufgabe X:
-    - Schulfach, Thema, Sozialform, Zeit
-    - Lernziel des Schulfachs
-    - Inhalt aus dem Medienbildungs-Lehrplan
-    - Aufgabenstellung für die Schüler
-    - Digitale Tools: (Ja/Nein/Wahlweise)"""
+Generiere die Aufgabe EXAKT in der vorgegebenen HTML-Struktur mit den CSS-Klassen."""
+
+    return prompt
 
 @app.route('/', methods=['GET'])
 def home():
@@ -211,26 +214,76 @@ def generate_tasks():
                 os.remove(file_path)
 
         system_prompt = """Du bist ein KI-Modell, das Lehrkräften dabei hilft, individuelle und zielgerichtete Aufgaben 
-        für den Unterricht zu erstellen. Dein Ziel ist es, Aufgaben zu generieren, die nicht nur den offiziellen Lehrplänen 
-        der jeweiligen Klassenstufe entsprechen, sondern auch die im Lehrplan für Medienbildung enthaltenen Kompetenzen fördern."""
+        für den Unterricht zu erstellen. Generiere Aufgaben EXAKT in folgender HTML-Struktur (beachte die Klassen):
+
+        <div class="task-wrapper">
+            <h1 class="task-title">[Titel der Aufgabe]</h1>
+            <h2 class="task-subtitle">[Prägnanter Untertitel]</h2>
+            
+            <div class="learning-objectives">
+                <h3>Lernziele</h3>
+                <ul>
+                    <li>[Lernziel 1]</li>
+                    <li>[Lernziel 2]</li>
+                    <li>[Lernziel 3]</li>
+                </ul>
+            </div>
+            
+            <div class="preparation">
+                <h3>Vorbereitung</h3>
+                <p>[Benötigte Materialien und Vorbereitungsschritte]</p>
+            </div>
+            
+            <div class="implementation">
+                <h3>Durchführung</h3>
+                <p>[Detaillierte Beschreibung der Durchführung]</p>
+            </div>
+        </div>
+
+        Wichtig: Halte dich EXAKT an diese HTML-Struktur und die CSS-Klassen. Die Aufgaben sollen den offiziellen Lehrplänen 
+        der jeweiligen Klassenstufe entsprechen und die Medienbildungskompetenzen fördern."""
 
         user_prompt = create_prompt(form_data, pdf_text)
         print(user_prompt)
 
-        response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            max_tokens=1000
-        )
+        # Generate 3 different tasks
+        tasks = []
+        for i in range(3):
+            response = openai.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": f"{user_prompt}\nBitte erstelle eine einzigartige Aufgabe (Variante {i+1}/3)."}
+                ],
+                max_tokens=1000
+            )
+            tasks.append(response.choices[0].message.content)
 
-        tasks = response.choices[0].message.content
+        # Generate summaries for each task
+        summaries = []
+        for task in tasks:
+            summary_prompt = """Erstelle eine kurze Zusammenfassung der Aufgabe (maximal 300 Zeichen) mit Fokus auf:
+            - Hauptthema
+            - Zentrale Aktivität
+            - Wichtigstes Lernziel"""
+            summary_response = openai.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": summary_prompt},
+                    {"role": "user", "content": task}
+                ],
+                max_tokens=200
+            )
+            summaries.append(summary_response.choices[0].message.content)
+
+        # Generate unique ID and store tasks
+        session_id = str(uuid.uuid4())
+        task_storage[session_id] = tasks
 
         return jsonify({
             'success': True,
-            'tasks': tasks,
+            'session_id': session_id,
+            'summaries': summaries,
             'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             'pdf_info': pdf_info,
             'pdf_text': pdf_text[:500] + "..." if len(pdf_text) > 500 else pdf_text
@@ -240,6 +293,36 @@ def generate_tasks():
         return jsonify({
             'success': False,
             'error': str(e)
+        }), 500
+
+@app.route('/get-task/<session_id>/<int:task_index>')
+def get_task(session_id, task_index):
+    try:
+        if session_id not in task_storage:
+            return jsonify({
+                'success': False,
+                'error': 'Session not found'
+            }), 404
+
+        tasks = task_storage[session_id]
+        if task_index >= len(tasks):
+            return jsonify({
+                'success': False,
+                'error': 'Task index out of range'
+            }), 404
+
+        # Return the task with proper HTML structure
+        task = tasks[task_index]
+        
+        return jsonify({
+            'success': True,
+            'task': task
+        })
+    except Exception as e:
+        print(f"Error retrieving task: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': 'Failed to retrieve task'
         }), 500
 
 if __name__ == '__main__':
