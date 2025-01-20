@@ -115,7 +115,7 @@ const TeacherInput = () => {
     <div className="page-container">
       <Header />
       <div className="container">
-        <h1>Aufgabengenerator für Lehrkräfte</h1>
+        <h1>Lehrer-Input</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="grade">Klassenstufe:</label>

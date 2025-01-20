@@ -155,7 +155,7 @@ def generate_suggestion():
             return jsonify({'error': 'Invalid field'}), 400
 
         response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": "Du bist ein hilfreicher Assistent für Lehrkräfte."},
                 {"role": "user", "content": prompt}
@@ -250,7 +250,7 @@ def generate_tasks():
         tasks = []
         for i in range(3):
             response = openai.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"{user_prompt}\nBitte erstelle eine einzigartige Aufgabe (Variante {i+1}/3)."}
@@ -267,7 +267,7 @@ def generate_tasks():
             - Zentrale Aktivität
             - Wichtigstes Lernziel"""
             summary_response = openai.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o",
                 messages=[
                     {"role": "system", "content": summary_prompt},
                     {"role": "user", "content": task}
