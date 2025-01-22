@@ -1,0 +1,189 @@
+.container {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  display: inline-flex;
+}
+
+.previewCard {
+  /* width: 420px; */
+  /* height: 500px; */
+  padding: 12px 24px 64px 24px;
+  background: #FFFDF4;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px rgba(0, 0, 0, 0.50) solid;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.previewCard:hover {
+  background: #FFFDF4;
+  border: 2px rgba(0, 0, 0, 0.50) solid;
+}
+
+.header {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 7.19px;
+  display: flex;
+}
+
+.headerTop {
+  align-self: stretch;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 14.38px;
+  display: inline-flex;
+}
+
+.headerText {
+  color: #454545;
+  font-size: 11px;
+  /* font-family: 'SF Pro Text'; */
+  font-weight: 400;
+  line-height: 25.17px;
+  word-wrap: break-word;
+}
+
+.title {
+  align-self: stretch;
+  color: #454545;
+  font-size: 24px;
+  font-family: 'SF Pro Display';
+  font-weight: 700;
+  letter-spacing: 0.24px;
+  word-wrap: break-word;
+}
+
+.subtitle {
+  color: #454545;
+  font-size: 16px;
+  font-family: 'SF Pro Display';
+  font-weight: 700;
+  line-height: 28.76px;
+  letter-spacing: 0.16px;
+  word-wrap: break-word;
+}
+
+.description {
+  align-self: stretch;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  display: inline-flex;
+}
+
+.descriptionText {
+  flex: 1;
+  color: #454545;
+  font-size: 14px;
+  /* font-family: 'SF Pro Text'; */
+  line-height: 23.44px;
+  word-wrap: break-word;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.infoRow {
+  align-self: stretch;
+  justify-content: space-between;
+  align-items: center;
+  display: inline-flex;
+}
+
+.infoRowContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.infoLabel {
+  justify-content: center;
+  align-items: center;
+  gap: 15.44px;
+  display: flex;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: flex;
+}
+
+.iconInner {
+  background: #FA4604;
+}
+
+.labelText {
+  color: #FA4604;
+  font-size: 14px;
+  /* font-family: 'SF Pro Text'; */
+  font-weight: 400;
+  line-height: 23.44px;
+  word-wrap: break-word;
+}
+
+.valueText {
+  color: #FA4604;
+  font-size: 14px;
+  /* font-family: 'SF Pro Text'; */
+  font-weight: 700;
+  line-height: 23.44px;
+  word-wrap: break-word;
+}
+
+.blackText {
+  font-size: 14px;
+  color: black;
+}
+
+.actionButton {
+  position: relative;
+  bottom: -72px;
+  right: -506px;
+  padding: 12px;
+  background: rgba(250, 70, 4, 0.20);
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.actionButton:hover {
+  background: rgba(250, 70, 4, 0.30);
+}
+
+.buttonInner {
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  display: flex;
+}
+
+.zoomIcon {
+  flex: 1;
+  align-self: stretch;
+  width: 28px;
+  height: 28px;
+} 

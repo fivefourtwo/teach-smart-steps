@@ -81,6 +81,8 @@ const TeacherInput = () => {
         formDataToSend.append('pdfFile', pdfFile);
       }
 
+      console.log(formDataToSend);
+
       const response = await fetch('/generate-tasks', {
         method: 'POST',
         body: formDataToSend

@@ -1,6 +1,7 @@
 // import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../common/Header';
+import TaskPreview from '../common/TaskPreview';
 import './TaskSummaries.css';
 
 const TaskSummaries = () => {
@@ -12,23 +13,21 @@ const TaskSummaries = () => {
     navigate(`/task/${sessionId}/${index}`);
   };
 
+  // Parse summaries if they're strings
+  const parsedSummaries = summaries.map(summary => 
+    typeof summary === 'string' ? JSON.parse(summary) : summary
+  );
+
   return (
     <div className="summaries-container">
       <Header />
-      <h1>Generierte Aufgaben</h1>
       <div className="summaries-grid">
-        {summaries.map((summary, index) => (
-          <div 
-            key={index} 
-            className="summary-card"
+        {parsedSummaries.map((summary, index) => (
+          <TaskPreview
+            key={index}
+            data={summary}
             onClick={() => handleTaskClick(index)}
-          >
-            <h2>Aufgabe {index + 1}</h2>
-            <p>{summary}</p>
-            <button className="view-task-btn">
-              Aufgabe ansehen
-            </button>
-          </div>
+          />
         ))}
       </div>
     </div>

@@ -9,6 +9,8 @@ import csv
 from io import StringIO
 import uuid
 from flask_cors import CORS
+import json
+# from openai.error import OpenAIError
 
 # Load environment variables
 load_dotenv()
@@ -155,7 +157,7 @@ def generate_suggestion():
             return jsonify({'error': 'Invalid field'}), 400
 
         response = openai.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-mini-2024-07-18",
             messages=[
                 {"role": "system", "content": "Du bist ein hilfreicher Assistent für Lehrkräfte."},
                 {"role": "user", "content": prompt}
@@ -246,35 +248,71 @@ def generate_tasks():
         user_prompt = create_prompt(form_data, pdf_text)
         print(user_prompt)
 
-        # Generate 3 different tasks
+        # Generate 2 different tasks
         tasks = []
-        for i in range(3):
-            response = openai.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": f"{user_prompt}\nBitte erstelle eine einzigartige Aufgabe (Variante {i+1}/3)."}
-                ],
-                max_tokens=1000
-            )
-            tasks.append(response.choices[0].message.content)
+        for i in range(2):
+            try:
+                response = openai.chat.completions.create(
+                    model="gpt-4o-mini-2024-07-18",
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": f"{user_prompt}\nBitte erstelle eine einzigartige Aufgabe (Variante {i+1}/2)."}
+                    ],
+                    max_tokens=1000
+                )
+                # Log the response for debugging
+                print(f"OpenAI API response: {response}")
+                tasks.append(response.choices[0].message.content)
+            except Exception as e:
+                print(f"Error calling OpenAI API: {e}")
+                return jsonify({'success': False, 'error': 'Error calling OpenAI API'}), 500
 
-        # Generate summaries for each task
+        # Generate structured summaries for each task
         summaries = []
         for task in tasks:
-            summary_prompt = """Erstelle eine kurze Zusammenfassung der Aufgabe (maximal 300 Zeichen) mit Fokus auf:
-            - Hauptthema
-            - Zentrale Aktivität
-            - Wichtigstes Lernziel"""
-            summary_response = openai.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "system", "content": summary_prompt},
-                    {"role": "user", "content": task}
-                ],
-                max_tokens=200
-            )
-            summaries.append(summary_response.choices[0].message.content)
+            summary_prompt = """Erstelle eine strukturierte Zusammenfassung der Aufgabe im folgenden Format:
+{
+    "grade": "Klassenstufe aus der Aufgabe",
+    "date": "aktuelles Datum",
+    "title": "Haupttitel der Aufgabe (max 40 Zeichen)",
+    "subtitle": "Untertitel/Aktivitätsbeschreibung (max 50 Zeichen)",
+    "description": "Ausführliche Beschreibung der Aufgabe (max 300 Zeichen)",
+    "time": "Zeitdauer",
+    "socialForm": "Sozialform",
+    "taskType": "Aufgabentyp",
+    "tools": "Ja/Nein",
+    "subject": "Schulfach"
+}
+
+Gib die Antwort **nur** als valides JSON-Objekt zurück, ohne zusätzliche Erklärungen oder Text und gebe jede Angabe an."""
+
+            try:
+                summary_response = openai.chat.completions.create(
+                    model="gpt-4",
+                    messages=[
+                        {"role": "system", "content": "Du bist ein präziser JSON-Generator."},
+                        {"role": "user", "content": summary_prompt + "\n\nAufgabe:\n" + task}
+                    ],
+                    max_tokens=300
+                )
+                raw_content = summary_response.choices[0].message.content.strip()
+                print(f"Summary Response Content: {raw_content}")
+
+                if not raw_content:
+                    print("Empty response received from OpenAI API.")
+                    return jsonify({'success': False, 'error': 'Empty response from OpenAI API'}), 500
+
+                summaries.append(json.loads(raw_content))
+            except json.JSONDecodeError as e:
+                print(f"JSON decode error: {e}")
+                print(f"Raw content received: {raw_content}")
+                return jsonify({'success': False, 'error': 'JSON decode error'}), 500
+            except OpenAIError as e:
+                print(f"OpenAI API error: {e}")
+                return jsonify({'success': False, 'error': 'OpenAI API error: ' + str(e)}), 500
+            except Exception as e:
+                print(f"Unexpected error: {e}")
+                return jsonify({'success': False, 'error': 'Unexpected error: ' + str(e)}), 500
 
         # Generate unique ID and store tasks
         session_id = str(uuid.uuid4())
@@ -290,10 +328,8 @@ def generate_tasks():
         })
 
     except Exception as e:
-        return jsonify({
-            'success': False,
-            'error': str(e)
-        }), 500
+        print(f"Unexpected error: {e}")
+        return jsonify({'success': False, 'error': 'Unexpected error: ' + str(e)}), 500
 
 @app.route('/get-task/<session_id>/<int:task_index>')
 def get_task(session_id, task_index):
