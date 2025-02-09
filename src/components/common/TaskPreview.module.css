@@ -14,7 +14,7 @@
   background: #FFFDF4;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px rgba(0, 0, 0, 0.50) solid;
+  outline: 1px rgba(0, 0, 0, 0.50) solid;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;

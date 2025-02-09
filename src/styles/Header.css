@@ -23,7 +23,7 @@
 .logo-icon {
   width: 35px;
   height: 35px;
-  transform: rotate(180deg);
+  /* transform: rotate(180deg); */
 }
 
 .logo-text {

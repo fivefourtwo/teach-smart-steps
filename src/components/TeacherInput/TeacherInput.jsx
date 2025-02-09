@@ -3,6 +3,7 @@ import Header from '../common/Header';
 import '../../styles/TeacherInput.css';
 import AutoFillButton from '../common/AutoFillButton';
 import { useNavigate } from 'react-router-dom';
+import FloatingMenu from '../common/floating_menu/FloatingMenu';
 
 const TeacherInput = () => {
   const [formData, setFormData] = useState({
@@ -116,6 +117,7 @@ const TeacherInput = () => {
   return (
     <div className="page-container">
       <Header />
+      <FloatingMenu />
       <div className="container">
         <h1>Lehrer-Input</h1>
         <form onSubmit={handleSubmit}>

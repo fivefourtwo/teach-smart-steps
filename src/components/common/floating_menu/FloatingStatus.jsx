@@ -1,12 +1,48 @@
-<div style={{width: '100%', height: '100%', padding: 16, background: '#FFFDF4', boxShadow: '0px 2px 6.300000190734863px rgba(199, 197, 188, 0.30)', borderRadius: 8, overflow: 'hidden', border: '1px #C7C5BC solid', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 24, display: 'inline-flex'}}>
-    <div style={{alignSelf: 'stretch', paddingLeft: 24, justifyContent: 'space-between', alignItems: 'center', display: 'inline-flex'}}>
-        <div style={{width: 20, height: 20, position: 'relative'}}>
-            <div style={{width: 15, height: 15, left: 2.50, top: 2.50, position: 'absolute', background: '#FA4604'}}></div>
-            <div style={{width: 7.50, height: 7.50, left: 6.25, top: 6.25, position: 'absolute', background: '#FA4604'}}></div>
+import { useState } from 'react';
+import './FloatingStatus.css';
+
+const FloatingStatus = () => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  return (
+    <div className="floating-status">
+        
+      <div className="floating-status-header">
+        <div className="status-icon">
+          <img src="/icons/status.svg" alt="status-icon" />
         </div>
-        <div style={{color: '#1E1E1E', fontSize: 16, fontFamily: 'Manrope', fontWeight: '600', wordWrap: 'break-word'}}>Status deiner Aufgabe</div>
-        <div style={{width: 24, height: 24, position: 'relative'}}>
-            <div style={{width: 18, height: 14, left: 3, top: 5, position: 'absolute', background: '#1E1E1E'}}></div>
+        <div className="status-header-text">Status deiner Aufgabe</div>
+          <div className="status-toggle-button" onClick={toggleCollapse}>
+            <img src="/icons/thumbnail_bar.svg" alt="Toggle Status" />
+          </div>
+      </div>
+
+      {!isCollapsed && (
+        <div className="status-section">
+          {/* Add your expandable status content here */}
+          {/* Example status parameters */}
+          <div className="status-parameter">
+            <span>Variationsbreite</span>
+            <span>0,25</span>
+          </div>
+          <div className="status-slider">
+            <div className="active-bar"></div>
+            <div className="inactive-bar"></div>
+            <div className="dot active" style={{ left: '54.17px', top: '5.15px' }}></div>
+            <div className="dot inactive" style={{ left: '102.85px', top: '5.15px' }}></div>
+            <div className="dot inactive" style={{ left: '151.52px', top: '5.15px' }}></div>
+            <div className="dot active" style={{ left: '5.49px', top: '5.15px' }}></div>
+            <div className="dot inactive" style={{ left: '200.2px', top: '5.15px' }}></div>
+          </div>
+          {/* Add more status parameters as needed */}
         </div>
+      )}
     </div>
-</div>
+  );
+};
+
+export default FloatingStatus;

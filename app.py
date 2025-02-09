@@ -91,6 +91,8 @@ Die Aufgabe MUSS in folgender Struktur erstellt werden:
 
 {f'Berücksichtige dabei folgende Informationen aus dem PDF-Dokument: {pdf_text}' if pdf_text else ''}
 
+Falls Angaben fehlen, fülle die fehlenden Angaben mit passenden Werten aus. Im Falle von Medienkompetenzen, wähle eine passende Medienkompetenz aus dem {MEDIA_COMPETENCY_PLAN} aus.
+
 Generiere die Aufgabe EXAKT in der vorgegebenen HTML-Struktur mit den CSS-Klassen."""
 
     return prompt
@@ -227,7 +229,7 @@ def generate_tasks():
                 <ul>
                     <li>[Lernziel 1]</li>
                     <li>[Lernziel 2]</li>
-                    <li>[Lernziel 3]</li>
+                    <li>[Medienkompetenz]</li>
                 </ul>
             </div>
             
@@ -284,7 +286,7 @@ def generate_tasks():
     "subject": "Schulfach"
 }
 
-Gib die Antwort **nur** als valides JSON-Objekt zurück, ohne zusätzliche Erklärungen oder Text und gebe jede Angabe an."""
+Gib die Antwort **nur** als valides JSON-Objekt zurück, ohne zusätzliche Erklärungen oder Text. Achte darauf, dass du alle aus dem obrigen Format hervorgehenden Angaben ausfüllst. Wenn du keine Angaben findest, trage eine naheliegende Angabe ein."""
 
             try:
                 summary_response = openai.chat.completions.create(
@@ -307,9 +309,9 @@ Gib die Antwort **nur** als valides JSON-Objekt zurück, ohne zusätzliche Erkl�
                 print(f"JSON decode error: {e}")
                 print(f"Raw content received: {raw_content}")
                 return jsonify({'success': False, 'error': 'JSON decode error'}), 500
-            except OpenAIError as e:
-                print(f"OpenAI API error: {e}")
-                return jsonify({'success': False, 'error': 'OpenAI API error: ' + str(e)}), 500
+            # except OpenAIError as e:
+            #     print(f"OpenAI API error: {e}")
+            #     return jsonify({'success': False, 'error': 'OpenAI API error: ' + str(e)}), 500
             except Exception as e:
                 print(f"Unexpected error: {e}")
                 return jsonify({'success': False, 'error': 'Unexpected error: ' + str(e)}), 500
