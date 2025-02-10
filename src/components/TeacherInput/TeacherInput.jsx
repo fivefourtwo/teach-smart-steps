@@ -3,19 +3,15 @@ import Header from '../common/Header';
 import '../../styles/TeacherInput.css';
 import AutoFillButton from '../common/AutoFillButton';
 import { useNavigate } from 'react-router-dom';
-import FloatingMenu from '../common/floating_menu/FloatingMenu';
 
 const TeacherInput = () => {
   const [formData, setFormData] = useState({
-    grade: '',
+    duration: '',
     subject: '',
-    curriculum_competency: '',
-    current_topic: '',
+    competency: '',
     social_form: '',
-    time: '',
-    media_competency: '',
-    task_format: '',
-    student_interests: '',
+    task_type: '',
+    topic: '',
     digital_tools: ''
   });
   const [pdfFile, setPdfFile] = useState(null);
@@ -36,8 +32,8 @@ const TeacherInput = () => {
   };
 
   const handleSuggestion = async (field) => {
-    if (!formData.grade || !formData.subject || !formData.current_topic) {
-      alert('Bitte füllen Sie zuerst die Felder "Klassenstufe", "Fach" und "Aktuelles Thema" aus.');
+    if (!formData.duration || !formData.subject || !formData.topic) {
+      alert('Bitte füllen Sie zuerst die Felder "Dauer", "Fach" und "Thema" aus.');
       return;
     }
 
@@ -49,9 +45,9 @@ const TeacherInput = () => {
         },
         body: JSON.stringify({
           field,
-          grade: formData.grade,
+          duration: formData.duration,
           subject: formData.subject,
-          current_topic: formData.current_topic
+          topic: formData.topic
         })
       });
 
@@ -117,24 +113,23 @@ const TeacherInput = () => {
   return (
     <div className="page-container">
       <Header />
-      <FloatingMenu />
       <div className="container">
         <h1>Lehrer-Input</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="grade">Klassenstufe:</label>
+            <label htmlFor="duration">Dauer:</label>
             <input
               type="text"
-              id="grade"
-              name="grade"
-              value={formData.grade}
+              id="duration"
+              name="duration"
+              value={formData.duration}
               onChange={handleInputChange}
               required
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="subject">Fach:</label>
+            <label htmlFor="subject">Schulfach:</label>
             <input
               type="text"
               id="subject"
@@ -157,23 +152,12 @@ const TeacherInput = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="curriculum_competency">Lehrplankompetenz:</label>
+            <label htmlFor="competency">Kompetenz:</label>
             <input
               type="text"
-              id="curriculum_competency"
-              name="curriculum_competency"
-              value={formData.curriculum_competency}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="current_topic">Aktuelles Thema:</label>
-            <input
-              type="text"
-              id="current_topic"
-              name="current_topic"
-              value={formData.current_topic}
+              id="competency"
+              name="competency"
+              value={formData.competency}
               onChange={handleInputChange}
               required
             />
@@ -195,56 +179,29 @@ const TeacherInput = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="time">Zeit:</label>
+            <label htmlFor="task_type">Aufgabentyp:</label>
+            <div className="input-with-suggestion">
+              <input
+                type="text"
+                id="task_type"
+                name="task_type"
+                value={formData.task_type}
+                onChange={handleInputChange}
+                required
+              />
+              <AutoFillButton onClick={() => handleSuggestion('task_type')} />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="topic">Thema:</label>
             <input
               type="text"
-              id="time"
-              name="time"
-              value={formData.time}
+              id="topic"
+              name="topic"
+              value={formData.topic}
               onChange={handleInputChange}
               required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="media_competency">Medienbildungs-Kompetenz:</label>
-            <div className="input-with-suggestion">
-              <input
-                type="text"
-                id="media_competency"
-                name="media_competency"
-                value={formData.media_competency}
-                onChange={handleInputChange}
-              />
-              <AutoFillButton onClick={() => handleSuggestion('media_competency')} />
-            </div>
-            <small className="field-hint">
-              Klicken Sie auf Vorschlag für eine passende Kompetenz aus dem Lehrplan.
-            </small>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="task_format">Aufgabenformat:</label>
-            <div className="input-with-suggestion">
-              <input
-                type="text"
-                id="task_format"
-                name="task_format"
-                value={formData.task_format}
-                onChange={handleInputChange}
-              />
-              <AutoFillButton onClick={() => handleSuggestion('task_format')} />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="student_interests">Interessen der Schüler:</label>
-            <input
-              type="text"
-              id="student_interests"
-              name="student_interests"
-              value={formData.student_interests}
-              onChange={handleInputChange}
             />
           </div>
 

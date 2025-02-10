@@ -71,15 +71,12 @@ def extract_text_from_pdf(file_path):
 def create_prompt(form_data, pdf_text=""):
     prompt = f"""Erstelle eine Unterrichtsaufgabe mit folgenden Vorgaben:
 
-Fach: {form_data.get('subject', '')}
-Klassenstufe: {form_data.get('grade', '')}
-Lehrplankompetenz: {form_data.get('curriculum_competency', '')}
-Aktuelles Thema: {form_data.get('current_topic', '')}
+Dauer: {form_data.get('duration', '')}
+Schulfach: {form_data.get('subject', '')}
+Kompetenz: {form_data.get('competency', '')}
 Sozialform: {form_data.get('social_form', '')}
-Zeit: {form_data.get('time', '')}
-Medienbildungs-Kompetenz: {form_data.get('media_competency', '')}
-Aufgabenformat: {form_data.get('task_format', '')}
-Schülerinteressen: {form_data.get('student_interests', '')}
+Aufgabentyp: {form_data.get('task_type', '')}
+Thema: {form_data.get('topic', '')}
 Digitale Tools: {form_data.get('digital_tools', '')}
 
 Die Aufgabe MUSS in folgender Struktur erstellt werden:
