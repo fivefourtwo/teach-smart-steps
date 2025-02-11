@@ -1,7 +1,8 @@
 import styles from './AufgabenSetUp.module.css';
 import ParameterInput from './ParameterInput';
+import PropTypes from 'prop-types';
 
-function Sidebar() {
+function Sidebar({ activeParameter, setActiveParameter }) {
   const parameters = [
     { icon: "https://cdn.builder.io/api/v1/image/assets/7da5ffe85d6946038bc7fd898fe05285/3c7ed34051ef45db157b55bae83aabcffd5e2cc0b3870e1cc63ec8360317710a?apiKey=7da5ffe85d6946038bc7fd898fe05285&", label: "Dauer" },
     { icon: "https://cdn.builder.io/api/v1/image/assets/7da5ffe85d6946038bc7fd898fe05285/6699f0797a04e86d3e7d395fcc04a53ea5605119cd3148c971c931b630a9e5b4?apiKey=7da5ffe85d6946038bc7fd898fe05285&", label: "Schulfach" },
@@ -15,11 +16,11 @@ function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <nav className={styles.breadCrumb}>
-        <div className={styles.breadCrumbContent}>
+        {/* <div className={styles.breadCrumbContent}> */}
           <button className={styles.breadCrumbButton}>Klassenangabe</button>
           <button className={styles.breadCrumbButton}>Startmethode</button>
           <button className={styles.breadCrumbButton}>Material-Import</button>
-        </div>
+        {/* </div> */}
       </nav>
       <div className={styles.sidemenu}>
         <div className={styles.sidemenuText}>
@@ -33,18 +34,31 @@ function Sidebar() {
         </div>
         <div className={styles.parameterList}>
           {parameters.map((param, index) => (
-            <ParameterInput key={index} icon={param.icon} label={param.label} />
+            <div 
+              key={index} 
+              onClick={() => setActiveParameter(param.label)}
+              className={activeParameter === param.label ? styles.activeParameter : ""}
+            >
+              <ParameterInput icon={param.icon} label={param.label} />
+            </div>
           ))}
         </div>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/7da5ffe85d6946038bc7fd898fe05285/5b310f5ac321769910faf8cb35d3e31ded30b354c3d28df7084e913ff87aa915?apiKey=7da5ffe85d6946038bc7fd898fe05285&"
-          className={styles.bottomImage}
-          alt=""
-        />
+        <button className={styles.button}>
+          <img
+            className={styles.icon20}
+            src="public/icons/white/Generate.svg"
+            alt="erstellen-icon"
+          />
+          <span className={styles.erstellen}>Erstellen</span>
+        </button>
       </div>
     </aside>
   );
 }
+
+Sidebar.propTypes = {
+  activeParameter: PropTypes.string.isRequired,
+  setActiveParameter: PropTypes.func.isRequired,
+};
 
 export default Sidebar;

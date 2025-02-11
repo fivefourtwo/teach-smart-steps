@@ -1,7 +1,8 @@
 import styles from './AufgabenSetUp.module.css';
 import StatusIndicator from './StatusIndicator';
-import Selector from './Selector';
-function Content() {
+import PropTypes from 'prop-types';
+
+function ContentDigitaleTools({ formData, handleInputChange }) {
   return (
     <main className={styles.content}>
       <div className={styles.contentWrapper}>
@@ -15,7 +16,12 @@ function Content() {
         <p className={styles.contentDescription}>
           Haben die Schüler:innen Zugang zu digitalen Tools?
         </p>
-        <Selector />
+        <input
+          type="text"
+          value={formData.digital_tools}
+          onChange={(e) => handleInputChange('digital_tools', e.target.value)}
+          required
+        />
         <button className={styles.explainButton}>
           <span>Erklär mir das</span>
           <img
@@ -31,4 +37,9 @@ function Content() {
   );
 }
 
-export default Content;
+ContentDigitaleTools.propTypes = {
+  formData: PropTypes.object.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+};
+
+export default ContentDigitaleTools;

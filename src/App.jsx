@@ -4,6 +4,7 @@ import PreInput from './components/PreInput/PreInput';
 import TeacherInput from './components/TeacherInput/TeacherInput';
 import TaskSummaries from './components/TaskSummaries/TaskSummaries';
 import TaskDetail from './components/TaskDetail/TaskDetail';
+import AufgabenSetUp from './assets/buildercode/AufgabenSetUp';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/input/teacher" element={<TeacherInput />} />
         <Route path="/task-summaries" element={<TaskSummaries />} />
         <Route path="/task/:sessionId/:taskIndex" element={<TaskDetail />} />
+        <Route path="/setup" element={<AufgabenSetUp />} />
       </Routes>
     </Router>
   );

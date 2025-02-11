@@ -11,7 +11,7 @@
     align-items: center;
     background: var(--beige-beige-background, #faf9f0);
     min-height: 80px;
-    width: 100%;
+    width: auto;
     padding: 0 24px;
     gap: 40px 100px;
   }
@@ -43,7 +43,7 @@
     border-radius: 8px;
     color: var(--color-orange, #fa4604);
     padding: 12px;
-    font: 600 16px/17px Manrope, -apple-system, Roboto, Helvetica, sans-serif;
+    font: 600 12px/17px Manrope, -apple-system, Roboto, Helvetica, sans-serif;
   }
   
   .headerAuth {
@@ -58,7 +58,7 @@
     align-items: center;
     gap: 8px;
     color: var(--color-orange, #fa4604);
-    font: 500 16px Manrope, sans-serif;
+    font: 500 12px Manrope, sans-serif;
     background: none;
     border: none;
     cursor: pointer;
@@ -105,12 +105,10 @@
   
   .body {
     display: flex;
-    margin-top: 10px;
-    width: 100%;
-    gap: 40px 76px;
+    width: auto;
+    /* gap: 64px; */
     justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 16px 24px;
+    padding: 0px 24px;
   }
   
   .sidebar {
@@ -118,29 +116,27 @@
     display: flex;
     min-width: 240px;
     flex-direction: column;
-    width: 532px;
+    width: 440px;
   }
   
   .breadCrumb {
+    width: auto;
+    height: 56px;
     padding-left: 16px;
     border-radius: 8px;
     border: 1px solid var(--beige-beige-3, #c9c7bf);
     background: var(--beige-beige-1, #fffdf4);
     display: flex;
-    min-height: 56px;
-    width: 100%;
     align-items: center;
     color: var(--black-grey-black, #1e1e1e);
-    font: 500 16px Manrope, sans-serif;
-  }
-  
-  .breadCrumbContent {
-    display: flex;
-    min-width: 240px;
-    align-items: center;
+    font: 500 12px Manrope, sans-serif;
     gap: 24px;
-    flex-wrap: wrap;
   }
+/*   
+  .breadCrumbContent {
+    width: 100%;
+    display: flex;
+  } */
   
   .breadCrumbButton {
     border-radius: 4px;
@@ -159,9 +155,10 @@
     background: var(--beige-beige-1, #fffdf4);
     display: flex;
     margin-top: 10px;
-    width: 100%;
+    width: auto;
     flex-direction: column;
-    padding: 32px 54px;
+    padding: 16px 24px;
+    gap: 24px;
   }
   
   .sidemenuText {
@@ -172,8 +169,10 @@
   }
   
   .sidemenuHeading {
+    width: 100%;
+    margin: 0;
     color: var(--black-grey-black, #1e1e1e);
-    font-size: 32px;
+    font-size: 20px;
     font-weight: 600;
     line-height: 40px;
   }
@@ -183,10 +182,12 @@
   }
   
   .sidemenuDescription {
+    width: 100%;
     color: var(--black-grey-grey-2, #999);
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
-    margin-top: 24px;
+    margin-top: 8px;
+    margin-bottom: 0;
   }
   
   .bold {
@@ -196,7 +197,7 @@
   
   .parameterList {
     display: flex;
-    margin-top: 48px;
+    /* margin-top: 24px; */
     width: 100%;
     flex-direction: column;
     gap: 16px;
@@ -213,7 +214,7 @@
     border: 1px solid var(--beige-beige-3, #c9c7bf);
     background: var(--beige-beige-1, #fffdf4);
     display: flex;
-    width: 100%;
+    width: auto;
     overflow: hidden;
     padding: 12px 16px;
   }
@@ -226,10 +227,10 @@
   
   .iconWrapper {
     display: flex;
-    min-height: 32px;
+    height: 20px;
     align-items: center;
     justify-content: center;
-    width: 32px;
+    width: 20px;
   }
   
   .parameterIcon {
@@ -240,7 +241,7 @@
   
   .parameterLabel {
     color: var(--black-grey-black, #1e1e1e);
-    font: 500 16px Manrope, sans-serif;
+    font: 500 12px Manrope, sans-serif;
   }
   
   .badges {
@@ -257,7 +258,7 @@
   .content {
     display: flex;
     min-width: 240px;
-    padding-top: 98px;
+    padding-top: 90px;
     flex-direction: column;
     overflow: hidden;
     justify-content: space-between;
@@ -266,7 +267,7 @@
   
   .contentWrapper {
     display: flex;
-    width: 100%;
+    width: auto;
     padding-left: 24px;
     flex-direction: column;
   }
@@ -280,7 +281,8 @@
   }
   
   .contentHeading {
-    font-size: 32px;
+    margin: 0;
+    font-size: 20px;
     color: var(--black-grey-black, #1e1e1e);
     font-weight: 600;
     line-height: 1;
@@ -290,13 +292,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: 12px;
     color: var(--black-grey-grey-2, #999);
     font-weight: 500;
   }
   
   .switchLabel {
-    font: 500 16px Manrope, sans-serif;
+    font: 500 12px Manrope, sans-serif;
   }
   
   .switch {
@@ -309,8 +311,8 @@
   
   .contentDescription {
     color: var(--black-grey-black, #1e1e1e);
-    margin-top: 16px;
-    font: 500 20px Manrope, sans-serif;
+    margin-top: 14px;
+    font: 500 16px Manrope, sans-serif;
   }
   
   .durationSelector {
@@ -319,7 +321,7 @@
   
   .durationLabel {
     color: var(--black-grey-grey-2, #999);
-    font: 500 16px Manrope, sans-serif;
+    font: 500 12px Manrope, sans-serif;
   }
   
   .durationButtons {
@@ -330,24 +332,25 @@
   }
   
   .durationButton {
-    border-radius: 35px;
+    height: 24px;
+    border-radius: 12px;
     border: 0.5px solid var(--black-grey-black, #1e1e1e);
-    padding: 7px 24px;
+    padding: 0px 12px;
     color: var(--black-grey-black, #1e1e1e);
-    font: 500 14px Manrope, sans-serif;
+    font: 500 10px Manrope, sans-serif;
     background: none;
     cursor: pointer;
   }
   
   .addDurationButton {
-    border-radius: 22px;
+    height: 24px;
+    width: 24px;
+    border-radius: 12px;
     border: 0.5px solid var(--black-grey-black, #1e1e1e);
     background: var(--beige-beige-1, #fffdf4);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 32px;
-    height: 32px;
     cursor: pointer;
   }
   
@@ -383,7 +386,7 @@
     justify-content: space-between;
     margin-top: 8px;
     color: var(--black-grey-grey-2, #999);
-    font: 500 12px Manrope, sans-serif;
+    font: 500 8px Manrope, sans-serif;
   }
   
   .explainButton {
@@ -391,7 +394,7 @@
     align-items: center;
     gap: 8px;
     color: var(--black-grey-grey-2, #999);
-    font: 500 16px Manrope, sans-serif;
+    font: 500 12px Manrope, sans-serif;
     background: none;
     border: none;
     cursor: pointer;
@@ -405,7 +408,7 @@
   }
   
   .statusIndicator {
-    margin-top: 313px;
+    margin-top: 0px;
   }
   
   .statusDescription {
@@ -434,14 +437,14 @@
   
   .statusTitle {
     color: var(--black-grey-black, #1e1e1e);
-    font: 650 16px Manrope, sans-serif;
+    font: 650 12px Manrope, sans-serif;
   }
   
   .statusText {
     margin-top: 8px;
     padding-left: 24px;
     color: var(--black-grey-black, #1e1e1e);
-    font: 500 16px Manrope, sans-serif;
+    font: 500 12px Manrope, sans-serif;
   }
   
   .statusGraph {
@@ -465,7 +468,14 @@
     margin-top: 24px;
     justify-content: space-between;
     color: var(--black-grey-black, #1e1e1e);
-    font: 500 16px Manrope, sans-serif;
+    font: 500 12px Manrope, sans-serif;
+  }
+
+  .infoContainer {
+    justify-content: end;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
   
   .infoPopup {
@@ -475,7 +485,7 @@
     flex-direction: column;
     overflow: hidden;
     padding: 24px 16px;
-    width: 334px;
+    width: 240px;
   }
   
   .popupHeading {
@@ -497,7 +507,7 @@
   
   .importTitle {
     color: var(--black-grey-black, #1e1e1e);
-    font: 650 16px Manrope, sans-serif;
+    font: 650 12px Manrope, sans-serif;
   }
   
   .closeButton {
@@ -524,19 +534,19 @@
   
   .infoText {
     color: var(--black-grey-black, #1e1e1e);
-    font: 500 16px Manrope, sans-serif;
+    font: 500 12px Manrope, sans-serif;
   }
   
   .infoSubtext {
     margin-top: 8px;
     color: var(--black-grey-black, #1e1e1e);
-    font: 650 16px Manrope, sans-serif;
+    font: 650 12px Manrope, sans-serif;
   }
   
   .infoFooter {
     margin-top: 24px;
     color: var(--black-grey-grey-2, #999);
-    font: 500 12px Manrope, sans-serif;
+    font: 500 8px Manrope, sans-serif;
   }
   
   @media (max-width: 991px) {
@@ -566,4 +576,40 @@
     .popupBody {
       padding-left: 20px;
     }
+  }
+  
+  .icon20 {
+    width: 20px;
+    position: relative;
+    height: 20px;
+    overflow: hidden;
+    flex-shrink: 0;
+    object-fit: cover;
+  }
+  
+  .erstellen {
+    position: relative;
+    font-weight: 500;
+  }
+  
+  .button {
+    position: relative;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    width: fit-content;
+    height: 32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 12px 0px 10px;
+    box-sizing: border-box;
+    gap: 8px;
+    text-align: left;
+    font-size: 16px;
+    color: #fffdf4;
+    font-family: Manrope;
+    border: none;
+    cursor: pointer;
   }

@@ -1,0 +1,30 @@
+:root {
+  /* Orange Colors */
+  --orange4: #fff6ec;
+  --orange3: #fed8c4;
+  --orange2: #ffcdb3;
+  --orange1: #fa4604;
+
+  /* Grey Colors */
+  --grey4: #d9d9d9;
+  --grey3: #999;
+  --grey2: #5a5a5a;
+  --grey1: #454545;
+  --black: #1e1e1e;
+
+  /* Violet Colors */
+  --violet3: #f9f4f2;
+  --violet2: #eadceb;
+  --violet1: #6f23b5;
+
+  /* Beige Colors */
+  --beige5: #fffefa;
+  --beige4: #fffdf4;
+  --beige3-background: #faf9f0;
+  --beige2: #efede3;
+  --beige1: #c9c7bf;
+
+  /* General Colors */
+  --color-black: var(--black);
+  --color-orange: var(--orange1);
+} 

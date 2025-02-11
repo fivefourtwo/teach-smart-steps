@@ -271,19 +271,14 @@ def generate_tasks():
         for task in tasks:
             summary_prompt = """Erstelle eine strukturierte Zusammenfassung der Aufgabe im folgenden Format:
 {
-    "grade": "Klassenstufe aus der Aufgabe",
-    "date": "aktuelles Datum",
-    "title": "Haupttitel der Aufgabe (max 40 Zeichen)",
-    "subtitle": "Untertitel/Aktivitätsbeschreibung (max 50 Zeichen)",
-    "description": "Ausführliche Beschreibung der Aufgabe (max 300 Zeichen)",
-    "time": "Zeitdauer",
-    "socialForm": "Sozialform",
-    "taskType": "Aufgabentyp",
-    "tools": "Ja/Nein",
-    "subject": "Schulfach"
+    "Titel": "Haupttitel der Aufgabe (max 40 Zeichen)",
+    "Beschreibung": "Beschreibung der Aufgabe (max 180 Zeichen)",
+    "Kompetenzbereich": "Der Titel des ausgwählten Kompetenzbereich aus dem Medienbildungslehrplan",
+    "Kompetenzbeschreibung": "Den ausgewählten Inhalt des ausgwählten Kompetenzbereichs",
+    "KI-Ergänzung": "Die Parameter die von der KI ergänzt wurden"
 }
 
-Gib die Antwort **nur** als valides JSON-Objekt zurück, ohne zusätzliche Erklärungen oder Text. Achte darauf, dass du alle aus dem obrigen Format hervorgehenden Angaben ausfüllst. Wenn du keine Angaben findest, trage eine naheliegende Angabe ein."""
+Gib die Antwort als valides JSON-Objekt zurück, ohne zusätzliche Erklärungen oder Text."""
 
             try:
                 summary_response = openai.chat.completions.create(

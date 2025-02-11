@@ -7,7 +7,7 @@ const PreInput = () => {
   const navigate = useNavigate();
 
   const handlePythonApp = () => {
-    navigate('/input/teacher');
+    navigate('/setup');
   };
 
   return (

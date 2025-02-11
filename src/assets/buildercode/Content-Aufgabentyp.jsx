@@ -1,22 +1,27 @@
 import styles from './AufgabenSetUp.module.css';
-import DurationSelector from './DurationSelector';
 import StatusIndicator from './StatusIndicator';
+import PropTypes from 'prop-types';
 
-function Content() {
+function ContentAufgabentyp({ formData, handleInputChange }) {
   return (
     <main className={styles.content}>
       <div className={styles.contentWrapper}>
         <div className={styles.head}>
-          <h1 className={styles.contentHeading}>Dauer</h1>
+          <h1 className={styles.contentHeading}>Aufgabentyp</h1>
           <div className={styles.automaticFillSwitch}>
             <span className={styles.switchLabel}>automatisch ausfüllen</span>
             <div className={styles.switch} role="switch" aria-checked="false" tabIndex="0" />
           </div>
         </div>
         <p className={styles.contentDescription}>
-          Wie viel Zeit sollen die Schüler*innen für die Bearbeitung der Aufgabe bekommen?
+          Welcher Aufgabentyp soll verwendet werden?
         </p>
-        <DurationSelector />
+        <input
+          type="text"
+          value={formData.task_type}
+          onChange={(e) => handleInputChange('task_type', e.target.value)}
+          required
+        />
         <button className={styles.explainButton}>
           <span>Erklär mir das</span>
           <img
@@ -32,4 +37,9 @@ function Content() {
   );
 }
 
-export default Content;
+ContentAufgabentyp.propTypes = {
+  formData: PropTypes.object.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+};
+
+export default ContentAufgabentyp;
