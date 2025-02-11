@@ -1,0 +1,40 @@
+.parameterInput {
+  width: 100%;
+}
+
+.sozialformSetup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--beige-beige-3, #c9c7bf);
+  background: var(--beige-beige-1, #fffdf4);
+  padding: 12px 16px;
+  overflow: hidden;
+  width: auto;
+}
+
+.inputLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.parameterIcon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.parameterLabel {
+  color: var(--black-grey-black, #1e1e1e);
+  font: 500 12px Manrope, sans-serif;
+} 

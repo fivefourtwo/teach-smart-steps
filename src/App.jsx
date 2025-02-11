@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './components/LandingPage/LandingPage';
+import LandingPage from './components/LandingPageOld/LandingPage';
 import PreInput from './components/PreInput/PreInput';
 import TeacherInput from './components/TeacherInput/TeacherInput';
 import TaskSummaries from './components/TaskSummaries/TaskSummaries';
 import TaskDetail from './components/TaskDetail/TaskDetail';
-import AufgabenSetUp from './assets/buildercode/AufgabenSetUp';
+import AufgabenSetUp from './components/SetUp/AufgabenSetUp';
 
 function App() {
   return (

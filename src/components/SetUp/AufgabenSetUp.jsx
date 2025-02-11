@@ -1,14 +1,14 @@
 import styles from './AufgabenSetUp.module.css';
-import Header from './Header';
-import Sidebar from './Sidebar';
-import InfoPopup from './InfoPopup';
-import ContentDauer from './Content-Dauer';
-import ContentSchulfach from './Content-Schulfach';
-import ContentKompetenz from './Content-Kompetenz';
-import ContentSozialform from './Content-Sozialform';
-import ContentAufgabentyp from './Content-Aufgabentyp';
-import ContentThema from './Content-Thema';
-import ContentDigitaleTools from './Content-DigitaleTools';
+import Header from '/src/components/common/Header';
+import Sidebar from './Sidebar/Sidebar';
+import InfoPopup from './InfoPopUp/InfoPopup';
+import ContentDauer from './Content/Content-Dauer';
+import ContentSchulfach from './Content/Content-Schulfach';
+import ContentKompetenz from './Content/Content-Kompetenz';
+import ContentSozialform from './Content/Content-Sozialform';
+import ContentAufgabentyp from './Content/Content-Aufgabentyp';
+import ContentThema from './Content/Content-Thema';
+import ContentDigitaleTools from './Content/Content-DigitaleTools';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

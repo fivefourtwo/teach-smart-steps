@@ -1,4 +1,4 @@
-import styles from './AufgabenSetUp.module.css';
+import styles from './DurationSelector.module.css';
 
 function DurationSelector() {
   const durations = ['15 Minuten', '30 Minuten', '45 Minuten', '60 Minuten'];

@@ -1,5 +1,5 @@
-import styles from './AufgabenSetUp.module.css';
-import ParameterInput from './ParameterInput';
+import styles from './Sidebar.module.css';
+import ParameterInput from '../ParameterInput/ParameterInput';
 import PropTypes from 'prop-types';
 
 function Sidebar({ activeParameter, setActiveParameter }) {

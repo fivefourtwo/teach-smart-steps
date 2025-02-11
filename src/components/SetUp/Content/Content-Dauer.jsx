@@ -1,27 +1,29 @@
-import styles from './AufgabenSetUp.module.css';
-import StatusIndicator from './StatusIndicator';
+import styles from './Content.module.css';
+import DurationSelector from '../DurationSlider/DurationSelector';
+import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import PropTypes from 'prop-types';
 
-function ContentThema({ formData, handleInputChange }) {
+function ContentDauer({ formData, handleInputChange }) {
   return (
     <main className={styles.content}>
       <div className={styles.contentWrapper}>
         <div className={styles.head}>
-          <h1 className={styles.contentHeading}>Thema</h1>
+          <h1 className={styles.contentHeading}>Dauer</h1>
           <div className={styles.automaticFillSwitch}>
             <span className={styles.switchLabel}>automatisch ausfüllen</span>
             <div className={styles.switch} role="switch" aria-checked="false" tabIndex="0" />
           </div>
         </div>
         <p className={styles.contentDescription}>
-          Zu welchem Thema soll die Aufgabe erstellt werden?
+          Wie viel Zeit sollen die Schüler*innen für die Bearbeitung der Aufgabe bekommen?
         </p>
         <input
           type="text"
-          value={formData.topic}
-          onChange={(e) => handleInputChange('topic', e.target.value)}
+          value={formData.duration}
+          onChange={(e) => handleInputChange('duration', e.target.value)}
           required
         />
+        <DurationSelector />
         <button className={styles.explainButton}>
           <span>Erklär mir das</span>
           <img
@@ -37,9 +39,9 @@ function ContentThema({ formData, handleInputChange }) {
   );
 }
 
-ContentThema.propTypes = {
+ContentDauer.propTypes = {
   formData: PropTypes.object.isRequired,
   handleInputChange: PropTypes.func.isRequired,
 };
 
-export default ContentThema;
+export default ContentDauer;

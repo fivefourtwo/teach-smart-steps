@@ -1,4 +1,4 @@
-import styles from './AufgabenSetUp.module.css';
+import styles from './StatusIndicator.module.css';
 
 function StatusIndicator() {
   return (

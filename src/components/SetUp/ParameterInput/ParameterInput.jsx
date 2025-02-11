@@ -1,4 +1,4 @@
-import styles from './AufgabenSetUp.module.css';
+import styles from './Parameterinput.module.css';
 import PropTypes from 'prop-types';
 
 function ParameterInput({ icon, label }) {

@@ -1,5 +1,5 @@
-import styles from './AufgabenSetUp.module.css';
-import StatusIndicator from './StatusIndicator';
+import styles from './Content.module.css';
+import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import PropTypes from 'prop-types';
 
 function ContentSozialform({ formData, handleInputChange }) {

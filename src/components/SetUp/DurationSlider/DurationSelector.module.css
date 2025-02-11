@@ -1,0 +1,70 @@
+.durationSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.durationLabel {
+  font-size: var(--text-md);
+  font-weight: 500;
+  font-family: var(--font-primary);
+}
+
+.durationButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.durationButton {
+  padding: 8px 12px;
+  border: 1px solid var(--color-orange, #fa4604);
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.addDurationButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.addIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.durationSlider {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sliderTrack {
+  width: 100%;
+  height: 4px;
+  background: var(--grey3, #999);
+  border-radius: 2px;
+  position: relative;
+}
+
+.sliderThumb {
+  width: 16px;
+  height: 16px;
+  background: var(--color-orange, #fa4604);
+  border-radius: 50%;
+  position: absolute;
+  top: -6px;
+  left: 0;
+  cursor: pointer;
+}
+
+.sliderLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--grey3, #999);
+} 

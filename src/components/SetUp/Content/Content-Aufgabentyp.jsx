@@ -1,25 +1,25 @@
-import styles from './AufgabenSetUp.module.css';
-import StatusIndicator from './StatusIndicator';
+import styles from './Content.module.css';
+import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import PropTypes from 'prop-types';
 
-function ContentSchulfach({ formData, handleInputChange }) {
+function ContentAufgabentyp({ formData, handleInputChange }) {
   return (
     <main className={styles.content}>
       <div className={styles.contentWrapper}>
         <div className={styles.head}>
-          <h1 className={styles.contentHeading}>Schulfach</h1>
+          <h1 className={styles.contentHeading}>Aufgabentyp</h1>
           <div className={styles.automaticFillSwitch}>
             <span className={styles.switchLabel}>automatisch ausfüllen</span>
             <div className={styles.switch} role="switch" aria-checked="false" tabIndex="0" />
           </div>
         </div>
         <p className={styles.contentDescription}>
-          Für welches Schulfach soll die Aufgabe erstellt werden?
+          Welcher Aufgabentyp soll verwendet werden?
         </p>
         <input
           type="text"
-          value={formData.subject}
-          onChange={(e) => handleInputChange('subject', e.target.value)}
+          value={formData.task_type}
+          onChange={(e) => handleInputChange('task_type', e.target.value)}
           required
         />
         <button className={styles.explainButton}>
@@ -37,9 +37,9 @@ function ContentSchulfach({ formData, handleInputChange }) {
   );
 }
 
-ContentSchulfach.propTypes = {
+ContentAufgabentyp.propTypes = {
   formData: PropTypes.object.isRequired,
   handleInputChange: PropTypes.func.isRequired,
 };
 
-export default ContentSchulfach;
+export default ContentAufgabentyp;

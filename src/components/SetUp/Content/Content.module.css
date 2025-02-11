@@ -1,0 +1,61 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contentWrapper {
+  padding: 16px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.contentHeading {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  font-family: var(--font-primary);
+  margin: 0;
+}
+
+.automaticFillSwitch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.switchLabel {
+  font-size: var(--text-sm);
+  font-family: var(--font-primary);
+  font-weight: 500;
+}
+
+.switch {
+  width: 40px;
+  height: 20px;
+  background: var(--grey4, #d9d9d9);
+  border-radius: 10px;
+}
+
+.contentDescription {
+  font-size: var(--text-md);
+  margin-bottom: 16px;
+}
+
+.explainButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.explainIcon {
+  width: 20px;
+  height: 20px;
+} 

@@ -1,29 +1,27 @@
-import styles from './AufgabenSetUp.module.css';
-import DurationSelector from './DurationSelector';
-import StatusIndicator from './StatusIndicator';
+import styles from './Content.module.css';
+import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import PropTypes from 'prop-types';
 
-function ContentDauer({ formData, handleInputChange }) {
+function ContentKompetenz({ formData, handleInputChange }) {
   return (
     <main className={styles.content}>
       <div className={styles.contentWrapper}>
         <div className={styles.head}>
-          <h1 className={styles.contentHeading}>Dauer</h1>
+          <h1 className={styles.contentHeading}>Kompetenz</h1>
           <div className={styles.automaticFillSwitch}>
             <span className={styles.switchLabel}>automatisch ausfüllen</span>
             <div className={styles.switch} role="switch" aria-checked="false" tabIndex="0" />
           </div>
         </div>
         <p className={styles.contentDescription}>
-          Wie viel Zeit sollen die Schüler*innen für die Bearbeitung der Aufgabe bekommen?
+          Welche Kompetenz soll mit dieser Aufgabe gefördert werden?
         </p>
         <input
           type="text"
-          value={formData.duration}
-          onChange={(e) => handleInputChange('duration', e.target.value)}
+          value={formData.competency}
+          onChange={(e) => handleInputChange('competency', e.target.value)}
           required
         />
-        <DurationSelector />
         <button className={styles.explainButton}>
           <span>Erklär mir das</span>
           <img
@@ -39,9 +37,9 @@ function ContentDauer({ formData, handleInputChange }) {
   );
 }
 
-ContentDauer.propTypes = {
+ContentKompetenz.propTypes = {
   formData: PropTypes.object.isRequired,
   handleInputChange: PropTypes.func.isRequired,
 };
 
-export default ContentDauer;
+export default ContentKompetenz;

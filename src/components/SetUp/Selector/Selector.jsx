@@ -1,4 +1,4 @@
-import styles from './AufgabenSetUp.module.css';
+import styles from './Selector.module.css';
 
 function Selector() {
   const durations = ['Ja', 'Nein', 'Teilweise'];
