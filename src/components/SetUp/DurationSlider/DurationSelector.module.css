@@ -1,29 +1,33 @@
 .durationSelector {
+  width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 8px;
 }
 
 .durationLabel {
-  font-size: var(--text-md);
-  font-weight: 500;
-  font-family: var(--font-primary);
+  color: var(--grey3);
 }
 
-.durationButtons {
+.chips {
   display: flex;
   gap: 8px;
 }
 
-.durationButton {
-  padding: 8px 12px;
-  border: 1px solid var(--color-orange, #fa4604);
+.chipButton {
+  height: 32px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border: 0.5px solid var(--black);
   background: transparent;
-  border-radius: 4px;
+  border-radius: 16px;
   cursor: pointer;
 }
 
-.addDurationButton {
+.addChipButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,15 +42,22 @@
 }
 
 .durationSlider {
+  width: 100%;
+  position: relative;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12px 0px;
+  box-sizing: border-box;
+  gap: 16px;
 }
 
 .sliderTrack {
   width: 100%;
   height: 4px;
-  background: var(--grey3, #999);
+  background: var(--grey3);
   border-radius: 2px;
   position: relative;
 }
@@ -54,7 +65,7 @@
 .sliderThumb {
   width: 16px;
   height: 16px;
-  background: var(--color-orange, #fa4604);
+  background: var(--color-orange);
   border-radius: 50%;
   position: absolute;
   top: -6px;
@@ -63,8 +74,10 @@
 }
 
 .sliderLabels {
+  width: 100%;
+  position: relative;
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   justify-content: space-between;
-  font-size: var(--text-xs);
-  color: var(--grey3, #999);
 } 

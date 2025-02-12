@@ -1,8 +1,9 @@
 .statusIndicator {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .statusDescription {
@@ -28,24 +29,22 @@
 }
 
 .statusTitle {
-  color: var(--black-grey-black, #1e1e1e);
-  font: 650 12px Manrope, sans-serif;
+  color: var(--black);
 }
 
 .statusText {
-  margin-top: 8px;
   padding-left: 24px;
-  color: var(--black-grey-black, #1e1e1e);
-  font: 500 12px Manrope, sans-serif;
+  color: var(--black);
 }
 
 .statusGraph {
-  margin-top: 25px;
   padding-left: 24px;
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .statusCurve {
-  transform: rotate(180deg);
   display: flex;
   width: 100%;
 }
@@ -57,8 +56,6 @@
 
 .statusLabels {
   display: flex;
-  margin-top: 24px;
   justify-content: space-between;
-  color: var(--black-grey-black, #1e1e1e);
-  font: 500 12px Manrope, sans-serif;
+  color: var(--black);
 } 

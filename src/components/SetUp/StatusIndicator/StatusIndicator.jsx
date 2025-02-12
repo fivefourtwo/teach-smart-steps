@@ -1,4 +1,5 @@
 import styles from './StatusIndicator.module.css';
+import textStyles from '../../../styles/text-styles.module.css';
 
 function StatusIndicator() {
   return (
@@ -13,9 +14,11 @@ function StatusIndicator() {
               alt=""
             />
           </div>
-          <h2 className={styles.statusTitle}>Status deiner Aufgabe</h2>
+          <h2 className={`${styles.statusTitle} ${textStyles['body-2-bold']}`}>
+            Status deiner Aufgabe
+          </h2>
         </div>
-        <p className={styles.statusText}>
+        <p className={`${styles.statusText} ${textStyles['body-2-medium']}`}>
           Da einige Parameter offen sind, können die Aufgaben variieren. Falls du gezieltere Vorschläge möchtest, ergänze weitere Angaben.
         </p>
       </div>
@@ -29,8 +32,8 @@ function StatusIndicator() {
           />
         </div>
         <div className={styles.statusLabels}>
-          <span className={styles.leftLabel}>hohe Varianz</span>
-          <span className={styles.rightLabel}>sehr gezielt</span>
+          <span className={textStyles['body-2-medium']}>hohe Varianz</span>
+          <span className={textStyles['body-2-medium']}>sehr gezielt</span>
         </div>
       </div>
     </div>

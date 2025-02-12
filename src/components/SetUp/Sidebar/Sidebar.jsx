@@ -1,6 +1,8 @@
 import styles from './Sidebar.module.css';
+import textStyles from '../../../styles/text-styles.module.css';
 import ParameterInput from '../ParameterInput/ParameterInput';
 import PropTypes from 'prop-types';
+import BreadCrumb from '../Breadcrumb/BreadCrumb';
 
 function Sidebar({ activeParameter, setActiveParameter }) {
   const parameters = [
@@ -15,42 +17,38 @@ function Sidebar({ activeParameter, setActiveParameter }) {
 
   return (
     <aside className={styles.sidebar}>
-      <nav className={styles.breadCrumb}>
-        {/* <div className={styles.breadCrumbContent}> */}
-          <button className={styles.breadCrumbButton}>Klassenangabe</button>
-          <button className={styles.breadCrumbButton}>Startmethode</button>
-          <button className={styles.breadCrumbButton}>Material-Import</button>
-        {/* </div> */}
-      </nav>
+      <BreadCrumb />
       <div className={styles.sidemenu}>
         <div className={styles.sidemenuText}>
-          <h2 className={styles.sidemenuHeading}>
+          <h2 className={textStyles['heading-1-semibold']}>
             Setze <span className={styles.highlight}>den Rahmen</span> für deine Aufgabe
           </h2>
-          <p className={styles.sidemenuDescription}>
-            <span className={styles.bold}>Aufgaben Set Up: </span>
+          <p className={`${styles.sidemenuDescription} ${textStyles['body-2-medium']}`}>
+            <span className={textStyles['body-2-medium']}>Aufgaben Set Up: </span>
             Auf Basis deines Inputs werden im nächsten Schritt später die Aufgaben generiert.
           </p>
         </div>
         <div className={styles.parameterList}>
-          {parameters.map((param, index) => (
-            <div 
-              key={index} 
-              onClick={() => setActiveParameter(param.label)}
-              className={activeParameter === param.label ? styles.activeParameter : ""}
-            >
-              <ParameterInput icon={param.icon} label={param.label} />
-            </div>
-          ))}
+          <div className={styles.parameterListWrapper}>
+            {parameters.map((param, index) => (
+              <div 
+                key={index} 
+                onClick={() => setActiveParameter(param.label)}
+                className={activeParameter === param.label ? styles.activeParameter : ""}
+              >
+                <ParameterInput icon={param.icon} label={param.label} />
+              </div>
+            ))}
+          </div>
+          <button className={`${styles.generateButton} ${textStyles['body-2-medium']}`}>
+            <img
+              className={styles.iconGenerate}
+              src="public/icons/white/Generate.svg"
+              alt="erstellen-icon"
+            />
+            <span className={styles.erstellen}>Erstellen</span>
+          </button>
         </div>
-        <button className={styles.button}>
-          <img
-            className={styles.icon20}
-            src="public/icons/white/Generate.svg"
-            alt="erstellen-icon"
-          />
-          <span className={styles.erstellen}>Erstellen</span>
-        </button>
       </div>
     </aside>
   );

@@ -1,4 +1,5 @@
 import styles from './Header.module.css';
+import textStyles from '../../styles/text-styles.module.css';
 
 function Header() {
   return (
@@ -7,12 +8,12 @@ function Header() {
         <div className={styles.figurativeMark}>
           <img
             loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/7da5ffe85d6946038bc7fd898fe05285/722dd938b58d9044b7aab679e7145fab6a915e4099c7283454cb08ede931ed6f?apiKey=7da5ffe85d6946038bc7fd898fe05285&"
+            src="/public/smart-steps-logo.svg"
             className={styles.logoImage}
             alt="Teach Smart Steps logo"
           />
         </div>
-        <div className={styles.wordmark}>
+        <div className={`${styles.wordmark} ${textStyles['body-2-bold']}`}>
           Teach <br />
           <span className={styles.highlight}>Smart Steps</span>
         </div>
@@ -20,7 +21,7 @@ function Header() {
       <div className={styles.headerAuth}>
         <button className={styles.generateTaskButton}>
           <div className={styles.buttonIndicator} />
-          <span>Aufgabe erstellen</span>
+          <span className={textStyles['body-2-medium']}>Aufgabe erstellen</span>
         </button>
         <img
           loading="lazy"
@@ -29,11 +30,18 @@ function Header() {
           alt=""
         />
         <div className={styles.general}>
-          <button className={styles.settingsButton} aria-label="Settings" />
+          <button className={styles.settingsButton} aria-label="Settings">
+            <img
+              loading="lazy"
+              src="/public/icons/black/Settings.svg"
+              className={styles.settingsImage}
+              alt="User profile"
+            />
+          </button>
           <button className={styles.profileButton} aria-label="Profile">
             <img
               loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/7da5ffe85d6946038bc7fd898fe05285/1d2a45dab9e3a532000f7b9f4f0a04100d3d12302b987d8cbf3b373c36ab8311?apiKey=7da5ffe85d6946038bc7fd898fe05285&"
+              src="/public/profile.png"
               className={styles.profileImage}
               alt="User profile"
             />

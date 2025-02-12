@@ -1,4 +1,5 @@
 import styles from './AufgabenSetUp.module.css';
+import textStyles from '../../styles/text-styles.module.css';
 import Header from '/src/components/common/Header';
 import Sidebar from './Sidebar/Sidebar';
 import InfoPopup from './InfoPopUp/InfoPopup';
@@ -91,9 +92,11 @@ function AufgabenSetUp() {
       <Header />
       <div className={styles.body}>
         <Sidebar activeParameter={activeParameter} setActiveParameter={setActiveParameter} />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.formContainer}>
           {renderContent()}
-          <button type="submit">Aufgaben generieren</button>
+          <button type="submit" className={textStyles['heading-1-semibold']}>
+            Aufgaben generieren
+          </button>
         </form>
         <InfoPopup />
       </div>

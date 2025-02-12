@@ -1,8 +1,9 @@
 import styles from './InfoPopup.module.css';
+import textStyles from '../../../styles/text-styles.module.css';
 
 const InfoPopup = () => {
   return (
-    <div className={styles.infoPopup}>
+    <div className={styles.infoContainer}>
       <aside className={styles.infoPopup}>
         <div className={styles.popupHeading}>
           <div className={styles.importInfo}>
@@ -12,7 +13,9 @@ const InfoPopup = () => {
               className={styles.importIcon}
               alt=""
             />
-            <h3 className={styles.importTitle}>Material-Import</h3>
+            <h3 className={`${styles.importTitle} ${textStyles['body-2-bold']}`}>
+              Material-Import
+            </h3>
           </div>
           <button className={styles.closeButton} aria-label="Close info popup">
             <img
@@ -25,13 +28,17 @@ const InfoPopup = () => {
         </div>
         <div className={styles.popupBody}>
           <div className={styles.infoContent}>
-            <p className={styles.infoText}>
+            <p className={`${styles.infoText} ${textStyles['body-2-medium']}`}>
               Die Angaben aus dem Material-Import wurden übernommen! 🎉 <br />
               Passe sie nach Bedarf an.
             </p>
-            <p className={styles.infoSubtext}>Thema, Kompetenz, Schulfach</p>
+            <p className={`${styles.infoSubtext} ${textStyles['body-2-bold']}`}>
+              Thema, Kompetenz, Schulfach
+            </p>
           </div>
-          <p className={styles.infoFooter}>nach Upload: Dokument.pdf</p>
+          <p className={`${styles.infoFooter} ${textStyles['note-medium']}`}>
+            nach Upload: Dokument.pdf
+          </p>
         </div>
       </aside>
     </div>

@@ -1,0 +1,44 @@
+.breadCrumb {
+    width: auto;
+    height: 56px;
+    padding-left: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--beige1);
+    background: var(--beige4);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.homeCrumb {
+    display: flex;
+    align-items: center;
+}
+
+.homeIcon {
+    width: 32px;
+    height: 32px;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+}
+
+.chevronIcon {
+    width: 24px;
+    height: 24px;
+}
+
+.breadCrumbButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    /* padding: 8px 12px; */
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.breadCrumbButton:hover {
+    color: var(--grey3);
+} 

@@ -2,8 +2,9 @@
   align-self: start;
   display: flex;
   flex-direction: column;
-  min-width: 240px;
-  width: 440px;
+  min-width: 440px;
+  width: 532px;
+  gap: 12px;
 }
 
 .breadCrumb {
@@ -11,12 +12,10 @@
   height: 56px;
   padding-left: 16px;
   border-radius: 8px;
-  border: 1px solid var(--beige-beige-3, #c9c7bf);
-  background: var(--beige-beige-1, #fffdf4);
+  border: 1px solid var(--beige1);
+  background: var(--beige4);
   display: flex;
   align-items: center;
-  color: var(--black-grey-black, #1e1e1e);
-  font: 500 12px Manrope, sans-serif;
   gap: 24px;
 }
 
@@ -27,79 +26,74 @@
   background: none;
   border: none;
   cursor: pointer;
-  font: inherit;
-  color: inherit;
+  color: var(--black);
 }
 
 .sidemenu {
   border-radius: 8px;
-  border: 1px solid var(--beige-beige-3, #c9c7bf);
-  background: var(--beige-beige-1, #fffdf4);
+  border: 1px solid var(--beige1);
+  background: var(--beige4);
   display: flex;
   flex-direction: column;
-  padding: 16px 24px;
-  gap: 24px;
-  margin-top: 10px;
+  padding: 32px 54px;
+  gap: 48px;
 }
 
 .sidemenuText {
   display: flex;
   flex-direction: column;
-  font-family: Manrope, sans-serif;
+  gap: 24px;
 }
 
 .sidemenuHeading {
   margin: 0;
-  color: var(--black-grey-black, #1e1e1e);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 40px;
+  color: var(--black);
 }
 
 .highlight {
-  color: var(--color-orange, #fa4604);
+  color: var(--orange1);
 }
 
 .sidemenuDescription {
-  color: var(--black-grey-grey-2, #999);
-  font-size: 12px;
-  font-weight: 500;
-  margin-top: 8px;
-  margin-bottom: 0;
+  color: var(--grey3);
 }
 
 .parameterList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.parameterListWrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .activeParameter {
-  background-color: var(--orange4, #fff6ec);
+  background-color: var(--orange4);
 }
 
-.button {
+.generateButton {
   position: relative;
   border-radius: 8px;
-  background-color: #1e1e1e;
+  background-color: var(--black);
   width: fit-content;
-  height: 32px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 12px 0 10px;
+  padding: 0 16px;
   box-sizing: border-box;
   gap: 8px;
-  font-size: 16px;
-  color: #fffdf4;
-  font-family: Manrope;
+  color: var(--beige4);
   border: none;
   cursor: pointer;
 }
 
-.icon20 {
-  width: 20px;
-  height: 20px;
+.iconGenerate {
+  width: 32px;
+  height: 32px;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -107,6 +101,5 @@
 }
 
 .erstellen {
-  font-weight: 500;
   position: relative;
 } 

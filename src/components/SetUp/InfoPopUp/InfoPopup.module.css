@@ -1,18 +1,23 @@
 .infoContainer {
+  height: 100%;
+  width: 334px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  justify-content: end;
+  align-items: flex-end;
+  justify-content: flex-end;
+  text-align: left;
 }
 
 .infoPopup {
   border-radius: 8px;
-  border: 1px solid var(--beige-beige-3, #c9c7bf);
+  border: 1px solid var(--beige1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   padding: 24px 16px;
-  width: 240px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .popupHeading {
@@ -30,11 +35,6 @@
 .importIcon {
   width: 24px;
   height: 24px;
-}
-
-.importTitle {
-  color: var(--black-grey-black, #1e1e1e);
-  font: 650 12px Manrope, sans-serif;
 }
 
 .closeButton {
@@ -59,19 +59,10 @@
   flex-direction: column;
 }
 
-.infoText {
-  color: var(--black-grey-black, #1e1e1e);
-  font: 500 12px Manrope, sans-serif;
-}
-
 .infoSubtext {
   margin-top: 8px;
-  color: var(--black-grey-black, #1e1e1e);
-  font: 650 12px Manrope, sans-serif;
 }
 
 .infoFooter {
   margin-top: 24px;
-  color: var(--black-grey-grey-2, #999);
-  font: 500 8px Manrope, sans-serif;
 } 

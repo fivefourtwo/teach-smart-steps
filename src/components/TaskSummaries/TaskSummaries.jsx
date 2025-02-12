@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../common/Header';
-import TaskPreview from '../common/TaskPreview';
+import TaskPreview from '../TaskPreview/TaskPreview';
 import './TaskSummaries.css';
 
 const TaskSummaries = () => {

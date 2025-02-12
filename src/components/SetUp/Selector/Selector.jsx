@@ -1,14 +1,19 @@
 import styles from './Selector.module.css';
+import textStyles from '../../../styles/text-styles.module.css';
 
 function Selector() {
   const durations = ['Ja', 'Nein', 'Teilweise'];
 
   return (
     <div className={styles.durationSelector}>
-      <label className={styles.durationLabel}>Wähle aus ob die Aufgabe mit digitalen Tools bearbeitet werden kann</label>
+      <label className={`${styles.durationLabel} ${textStyles['body-2-medium']}`}>
+        Wähle aus ob die Aufgabe mit digitalen Tools bearbeitet werden kann
+      </label>
       <div className={styles.durationButtons}>
         {durations.map((duration, index) => (
-          <button key={index} className={styles.durationButton}>{duration}</button>
+          <button key={index} className={`${styles.durationButton} ${textStyles['body-2-medium']}`}>
+            {duration}
+          </button>
         ))}
         <button className={styles.addDurationButton} aria-label="Weitere Dauer hinzufügen">
           <img
