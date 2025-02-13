@@ -4,7 +4,7 @@ import ParameterInput from '../ParameterInput/ParameterInput';
 import PropTypes from 'prop-types';
 import BreadCrumb from '../Breadcrumb/BreadCrumb';
 
-function Sidebar({ activeParameter, setActiveParameter }) {
+function Sidebar({ activeParameter, setActiveParameter, onGenerate }) {
   const parameters = [
     { icon: "https://cdn.builder.io/api/v1/image/assets/7da5ffe85d6946038bc7fd898fe05285/3c7ed34051ef45db157b55bae83aabcffd5e2cc0b3870e1cc63ec8360317710a?apiKey=7da5ffe85d6946038bc7fd898fe05285&", label: "Dauer", type: "inputUser", value: "10 Minuten" },
     { icon: "https://cdn.builder.io/api/v1/image/assets/7da5ffe85d6946038bc7fd898fe05285/6699f0797a04e86d3e7d395fcc04a53ea5605119cd3148c971c931b630a9e5b4?apiKey=7da5ffe85d6946038bc7fd898fe05285&", label: "Schulfach", type: "inputUser", value: "Mathe" },
@@ -31,7 +31,7 @@ function Sidebar({ activeParameter, setActiveParameter }) {
         <div className={styles.parameterList}>
           <div className={styles.parameterListWrapper}>
             {parameters.map((param, index) => (
-                <ParameterInput 
+              <ParameterInput 
                 type={param.type}
                 isSelected={activeParameter === param.label} 
                 parameter={param.label} 
@@ -39,10 +39,14 @@ function Sidebar({ activeParameter, setActiveParameter }) {
                 iconSrc={param.icon}
                 setActiveParameter={setActiveParameter}
                 key={index}
-                />
+              />
             ))}
           </div>
-          <button type="submit" className={`${styles.generateButton} ${textStyles['body-2-medium']}`}>
+          <button 
+            type="button" 
+            onClick={onGenerate} 
+            className={`${styles.generateButton} ${textStyles['body-2-medium']}`}
+          >
             <img
               className={styles.iconGenerate}
               src="public/icons/white/Generate.svg"
@@ -59,6 +63,7 @@ function Sidebar({ activeParameter, setActiveParameter }) {
 Sidebar.propTypes = {
   activeParameter: PropTypes.string.isRequired,
   setActiveParameter: PropTypes.func.isRequired,
+  onGenerate: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

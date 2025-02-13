@@ -28,7 +28,7 @@ function AufgabenSetUp() {
   
   const navigate = useNavigate();
   
-  // A unified change handler that can be passed into your content components so that they update formData:
+  // A unified change handler that is passed into your content components so that they update formData:
   const handleInputChange = (name, value) => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
@@ -38,16 +38,18 @@ function AufgabenSetUp() {
     console.log('Current formData:', formData);
   }, [formData]);
 
-  // A submit handler similar to TeacherInput.jsx:
+  // Modified submit handler which works whether an event is passed or not.
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Build your form data (you can include file uploads if needed)
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    // Build your form data for the API call
     const formDataToSend = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value);
     });
-    // (Include any additional files as needed)
-    // Now make the fetch call
+    // Include additional files if needed...
+
     try {
       const response = await fetch('/generate-tasks', {
         method: 'POST',
@@ -96,12 +98,14 @@ function AufgabenSetUp() {
     <div className={styles.aufgabenSetUp}>
       <Header />
       <div className={styles.body}>
-        <Sidebar activeParameter={activeParameter} setActiveParameter={setActiveParameter} />
+        <Sidebar 
+          activeParameter={activeParameter} 
+          setActiveParameter={setActiveParameter} 
+          onGenerate={handleSubmit}
+        />
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           {renderContent()}
-          {/* <button type="submit" className={textStyles['heading-1-semibold']}>
-            Aufgaben generieren
-          </button> */}
+          {/* You may want to keep the form submission accessible via enter-key as well */}
         </form>
         <InfoPopup />
       </div>
