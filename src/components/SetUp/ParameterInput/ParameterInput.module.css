@@ -148,9 +148,9 @@
   font-weight: 650;
 }
 
-/* .inputUser {
+.inputUser {
   color: var(--orange1);
-} */
+}
 
 .inputUser:hover {
   background-color: var(--orange4);

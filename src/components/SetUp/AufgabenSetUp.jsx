@@ -102,6 +102,7 @@ function AufgabenSetUp() {
           activeParameter={activeParameter} 
           setActiveParameter={setActiveParameter} 
           onGenerate={handleSubmit}
+          formData={formData}
         />
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           {renderContent()}

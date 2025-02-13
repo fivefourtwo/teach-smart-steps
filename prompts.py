@@ -33,12 +33,13 @@ Aufgabentyp: {form_data.get('task_type', '')}
 Thema: {form_data.get('topic', '')}
 Digitale Tools: {form_data.get('digital_tools', '')}
 
-Die Aufgabe MUSS in folgender Struktur erstellt werden:
-1. Ein prägnanter Titel, der das Hauptthema erfasst
-2. Ein kurzer Untertitel, der die Aktivität beschreibt
-3. Drei konkrete Lernziele
-4. Eine Liste der benötigten Materialien und Vorbereitungsschritte
-5. Eine detaillierte, schrittweise Beschreibung der Durchführung
+Dein Output soll für jede Aufgabe Folgendermaßen aufgebaut sein:
+Aufgabenvorschlag 1:
+Schulfach, Thema, Sozialform, Zeit
+Lernziel des Schulfachs 
+Inhalt aus dem Medienbidlung Lehrplan
+Grobe Aufgebenstellung für die Schüler
+Werden Digitale Tools benötigt? Ja/Nein/Wahlweise
 
 {f'Berücksichtige dabei folgende Informationen aus dem PDF-Dokument: {pdf_text}' if pdf_text else ''}
 

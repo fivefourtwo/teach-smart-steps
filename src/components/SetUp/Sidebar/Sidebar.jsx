@@ -4,15 +4,15 @@ import ParameterInput from '../ParameterInput/ParameterInput';
 import PropTypes from 'prop-types';
 import BreadCrumb from '../Breadcrumb/BreadCrumb';
 
-function Sidebar({ activeParameter, setActiveParameter, onGenerate }) {
+function Sidebar({ activeParameter, setActiveParameter, onGenerate, formData }) {
   const parameters = [
-    { icon: "public/Input-icons/normal/Dauer-normal.png", label: "Dauer", type: "deafult", value: "10 Minuten" },
-    { icon: "public/Input-icons/normal/Fach-normal.png", label: "Schulfach", type: "deafult", value: "Mathe" },
-    { icon: "public/Input-icons/normal/Kompetenz-normal.png", label: "Kompetenz", type: "deafult", value: "Sprache und Sprachgebrauch" },
-    { icon: "public/Input-icons/normal/Sozialform-normal.png", label: "Sozialform", type: "deafult", value: "Gruppenarbeit" },
-    { icon: "public/Input-icons/normal/Aufgabentyp-normal.png", label: "Aufgabentyp", type: "deafult", value: "Lückentext" },
-    { icon: "public/Input-icons/normal/Thema-normal.png", label: "Thema", type: "deafult", value: "Freundschaft" },
-    { icon: "public/Input-icons/normal/Tools-normal.png", label: "Digitale Tools", type: "deafult", value: "Ohne Tools" }
+    { icon: "public/Input-icons/normal/Dauer-normal.png", label: "Dauer", type: formData.duration ? "inputUser" : "default", value: formData.duration },
+    { icon: "public/Input-icons/normal/Fach-normal.png", label: "Schulfach", type: formData.subject ? "inputUser" : "default", value: formData.subject },
+    { icon: "public/Input-icons/normal/Kompetenz-normal.png", label: "Kompetenz", type: formData.competency ? "inputUser" : "default", value: formData.competency },
+    { icon: "public/Input-icons/normal/Sozialform-normal.png", label: "Sozialform", type: formData.social_form ? "inputUser" : "default", value: formData.social_form },
+    { icon: "public/Input-icons/normal/Aufgabentyp-normal.png", label: "Aufgabentyp", type: formData.task_type ? "inputUser" : "default", value: formData.task_type },
+    { icon: "public/Input-icons/normal/Thema-normal.png", label: "Thema", type: formData.topic ? "inputUser" : "default", value: formData.topic },
+    { icon: "public/Input-icons/normal/Tools-normal.png", label: "Digitale Tools", type: formData.digital_tools ? "inputUser" : "default", value: formData.digital_tools }
   ];
 
   return (
@@ -64,6 +64,7 @@ Sidebar.propTypes = {
   activeParameter: PropTypes.string.isRequired,
   setActiveParameter: PropTypes.func.isRequired,
   onGenerate: PropTypes.func.isRequired,
+  formData: PropTypes.object.isRequired,
 };
 
 export default Sidebar;
