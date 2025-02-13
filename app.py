@@ -12,13 +12,27 @@ from flask_cors import CORS
 import json
 # from openai.error import OpenAIError
 
+# Import all prompt helper functions and constants from prompts.py
+from prompts import (
+    create_task_prompt,
+    media_competency_prompt,
+    social_form_prompt,
+    task_format_prompt,
+    digital_tools_prompt,
+    SYSTEM_TASK_PROMPT,
+    SUMMARY_PROMPT,
+    MEDIA_COMPETENCY_PLAN
+)
+
 # Load environment variables
 load_dotenv()
 
-app = Flask(__name__, 
+app = Flask(
+    __name__,
     static_url_path='/static',
     static_folder='static',
-    template_folder='templates')
+    template_folder='templates'
+)
 CORS(app)
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
@@ -26,16 +40,6 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'pdf'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# Media competency plan as a string (CSV format)
-MEDIA_COMPETENCY_PLAN = '''Thema,Unterpunkte,Inhaltsbezogene Kompetenzen
-Grundlagen: Medien kennenlernen,Was sind Medien?; Medien früher und heute; Medien sind vielfältig; Medien nutzen,"Unterschiedliche Medienarten (Print, digital, Audio, Video) erkennen.; Medienformate verstehen und benennen."
-Grundlagen: Einführung Internet,Was ist das Internet?; Internetverbindung; Der Browser,Internet als Informationsquelle erkennen.; Browserfunktionen verstehen und anwenden.
-Sicherheit: Sicher im Internet - Digitale Fußabdrücke,Was ist ein digitaler Fußabdruck?; Wie hinterlassen wir Spuren im Internet?; Verantwortung im Umgang mit eigenen und fremden Daten; Gefahren im Internet; Geräte und Datenschutz; Online-Spiele und Cybergrooming; Viren und Downloads,Den digitalen Fußabdruck und dessen Auswirkungen auf die Privatsphäre verstehen.; Grundlegendes Verständnis von Online-Gefahren und Datenschutz entwickeln.; Werbung und ihre Manipulation verstehen.
-Sicherheit: Soziale Netzwerke,Was sind soziale Netzwerke?; Profil erstellen; Gefahren und Risiken; Cybermobbing,Soziale Netzwerke und ihre Funktionen verstehen.; Das Erstellen eines Profils und die damit verbundenen Risiken.
-Beobachten: Werbung und Konsum,Werbeformen: Wo begegnen wir Werbung im Alltag?; Werbung in sozialen Netzwerken; Werbung und Kinder: Wie beeinflusst uns Werbung?,Werbeziele und -methoden verstehen.; Werbung als Einflussfaktor auf Konsumverhalten erkennen.
-Beobachten: Medienanalyse – Was steckt hinter den Medien,"Verantwortung von Medienmachern; Fake News und Desinformation; Medienanalyse: Texte, Bilder, Videos kritisch hinterfragen",Verantwortungsvolle Mediennutzung verstehen.; Fake News erkennen.
-Medien und ihre Wirkung,Wie beeinflussen Medien unser Denken und Verhalten?; Der Umgang mit Bildern und Sprache; Auswirkungen von zu viel Bildschirmzeit,Medieninhalte und deren Einfluss auf die Wahrnehmung erkennen.; Den eigenen Umgang mit Bildschirmzeit reflektieren.'''
 
 task_storage = {}  # In-memory storage (consider using a database in production)
 
@@ -68,37 +72,11 @@ def extract_text_from_pdf(file_path):
         print(f"Error reading PDF: {str(e)}")
     return text
 
-def create_prompt(form_data, pdf_text=""):
-    prompt = f"""Erstelle eine Unterrichtsaufgabe mit folgenden Vorgaben:
-
-Dauer: {form_data.get('duration', '')}
-Schulfach: {form_data.get('subject', '')}
-Kompetenz: {form_data.get('competency', '')}
-Sozialform: {form_data.get('social_form', '')}
-Aufgabentyp: {form_data.get('task_type', '')}
-Thema: {form_data.get('topic', '')}
-Digitale Tools: {form_data.get('digital_tools', '')}
-
-Die Aufgabe MUSS in folgender Struktur erstellt werden:
-1. Ein prägnanter Titel, der das Hauptthema erfasst
-2. Ein kurzer Untertitel, der die Aktivität beschreibt
-3. Drei konkrete Lernziele
-4. Eine Liste der benötigten Materialien und Vorbereitungsschritte
-5. Eine detaillierte, schrittweise Beschreibung der Durchführung
-
-{f'Berücksichtige dabei folgende Informationen aus dem PDF-Dokument: {pdf_text}' if pdf_text else ''}
-
-Falls Angaben fehlen, fülle die fehlenden Angaben mit passenden Werten aus. Im Falle von Medienkompetenzen, wähle eine passende Medienkompetenz aus dem {MEDIA_COMPETENCY_PLAN} aus.
-
-Generiere die Aufgabe EXAKT in der vorgegebenen HTML-Struktur mit den CSS-Klassen."""
-
-    return prompt
-
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
 
-# Generate a suggestion for a given field
+# Generate a suggestion for a given field using outsourced prompts
 @app.route('/generate-suggestion', methods=['POST'])
 def generate_suggestion():
     try:
@@ -110,56 +88,21 @@ def generate_suggestion():
         }
 
         if field == 'media_competency':
-            # Load the competencies
-            competencies = load_media_competencies()
-            
-            prompt = f"""Wähle eine passende Medienkompetenz aus dem folgenden Lehrplan aus.
-            
-            Kontext:
-            - Klassenstufe: {context['grade']}
-            - Fach: {context['subject']}
-            - Aktuelles Thema: {context['current_topic']}
-            
-            Verfügbare Kompetenzen:
-            {MEDIA_COMPETENCY_PLAN}
-            
-            Wähle eine passende inhaltsbezogene Kompetenz aus und gib sie exakt so zurück, wie sie im Plan steht.
-            Berücksichtige dabei den Zusammenhang zum Fach und Thema.
-            Gib nur die ausgewählte Kompetenz zurück, ohne weitere Erklärungen."""
-
+            prompt_text = media_competency_prompt(context)
+        elif field == 'social_form':
+            prompt_text = social_form_prompt(context)
+        elif field == 'task_format':
+            prompt_text = task_format_prompt(context)
+        elif field == 'digital_tools':
+            prompt_text = digital_tools_prompt(context)
         else:
-            prompts = {
-                'social_form': f"""Schlage eine passende Sozialform für den Unterricht vor.
-                    Berücksichtige dabei:
-                    - Klassenstufe: {context['grade']}
-                    - Fach: {context['subject']}
-                    - Aktuelles Thema: {context['current_topic']}
-                    Gib nur die Sozialform zurück, ohne weitere Erklärungen.""",
-                
-                'task_format': f"""Schlage ein passendes Aufgabenformat für den Unterricht vor.
-                    Berücksichtige dabei:
-                    - Klassenstufe: {context['grade']}
-                    - Fach: {context['subject']}
-                    - Aktuelles Thema: {context['current_topic']}
-                    Gib nur das Aufgabenformat zurück, ohne weitere Erklärungen.""",
-                
-                'digital_tools': f"""Schlage ein passendes digitales Tool für den Unterricht vor.
-                    Berücksichtige dabei:
-                    - Klassenstufe: {context['grade']}
-                    - Fach: {context['subject']}
-                    - Aktuelles Thema: {context['current_topic']}
-                    Gib nur den Namen des Tools zurück, ohne weitere Erklärungen."""
-            }
-            prompt = prompts.get(field)
-
-        if not prompt:
             return jsonify({'error': 'Invalid field'}), 400
 
         response = openai.chat.completions.create(
             model="gpt-4o-mini-2024-07-18",
             messages=[
                 {"role": "system", "content": "Du bist ein hilfreicher Assistent für Lehrkräfte."},
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": prompt_text}
             ],
             max_tokens=100
         )
@@ -171,7 +114,7 @@ def generate_suggestion():
         print(f"Error in generate-suggestion: {str(e)}")
         return jsonify({'error': str(e)}), 500
     
-# Generate tasks based on the form data and optional PDF file
+# Generate tasks based on the form data and optional PDF file using outsourced prompts
 @app.route('/generate-tasks', methods=['GET', 'POST'])
 def generate_tasks():
     if request.method != 'POST':
@@ -214,47 +157,18 @@ def generate_tasks():
                 doc.close()
                 os.remove(file_path)
 
-        system_prompt = """Du bist ein KI-Modell, das Lehrkräften dabei hilft, individuelle und zielgerichtete Aufgaben 
-        für den Unterricht zu erstellen. Generiere Aufgaben EXAKT in folgender HTML-Struktur (beachte die Klassen):
-
-        <div class="task-wrapper">
-            <h1 class="task-title">[Titel der Aufgabe]</h1>
-            <h2 class="task-subtitle">[Prägnanter Untertitel]</h2>
-            
-            <div class="learning-objectives">
-                <h3>Lernziele</h3>
-                <ul>
-                    <li>[Lernziel 1]</li>
-                    <li>[Lernziel 2]</li>
-                    <li>[Medienkompetenz]</li>
-                </ul>
-            </div>
-            
-            <div class="preparation">
-                <h3>Vorbereitung</h3>
-                <p>[Benötigte Materialien und Vorbereitungsschritte]</p>
-            </div>
-            
-            <div class="implementation">
-                <h3>Durchführung</h3>
-                <p>[Detaillierte Beschreibung der Durchführung]</p>
-            </div>
-        </div>
-
-        Wichtig: Halte dich EXAKT an diese HTML-Struktur und die CSS-Klassen. Die Aufgaben sollen den offiziellen Lehrplänen 
-        der jeweiligen Klassenstufe entsprechen und die Medienbildungskompetenzen fördern."""
-
-        user_prompt = create_prompt(form_data, pdf_text)
+        # Use the outsourced prompt to create the task prompt
+        user_prompt = create_task_prompt(form_data, pdf_text)
         print(user_prompt)
 
-        # Generate 2 different tasks
+        # Generate two different tasks using the imported SYSTEM_TASK_PROMPT
         tasks = []
         for i in range(2):
             try:
                 response = openai.chat.completions.create(
                     model="gpt-4o-mini-2024-07-18",
                     messages=[
-                        {"role": "system", "content": system_prompt},
+                        {"role": "system", "content": SYSTEM_TASK_PROMPT},
                         {"role": "user", "content": f"{user_prompt}\nBitte erstelle eine einzigartige Aufgabe (Variante {i+1}/2)."}
                     ],
                     max_tokens=1000
@@ -266,26 +180,15 @@ def generate_tasks():
                 print(f"Error calling OpenAI API: {e}")
                 return jsonify({'success': False, 'error': 'Error calling OpenAI API'}), 500
 
-        # Generate structured summaries for each task
+        # Generate structured summaries for each task using the outsourced SUMMARY_PROMPT
         summaries = []
         for task in tasks:
-            summary_prompt = """Erstelle eine strukturierte Zusammenfassung der Aufgabe im folgenden Format:
-{
-    "Titel": "Haupttitel der Aufgabe (max 40 Zeichen)",
-    "Beschreibung": "Beschreibung der Aufgabe (max 180 Zeichen)",
-    "Kompetenzbereich": "Der Titel des ausgwählten Kompetenzbereich aus dem Medienbildungslehrplan",
-    "Kompetenzbeschreibung": "Den ausgewählten Inhalt des ausgwählten Kompetenzbereichs",
-    "KI-Ergänzung": "Die Parameter die von der KI ergänzt wurden"
-}
-
-Gib die Antwort als valides JSON-Objekt zurück, ohne zusätzliche Erklärungen oder Text."""
-
             try:
                 summary_response = openai.chat.completions.create(
                     model="gpt-4",
                     messages=[
                         {"role": "system", "content": "Du bist ein präziser JSON-Generator."},
-                        {"role": "user", "content": summary_prompt + "\n\nAufgabe:\n" + task}
+                        {"role": "user", "content": SUMMARY_PROMPT + "\n\nAufgabe:\n" + task}
                     ],
                     max_tokens=300
                 )
