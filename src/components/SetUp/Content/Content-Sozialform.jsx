@@ -29,6 +29,7 @@ function ContentSozialform({ formData, handleInputChange }) {
           {chipOptions.map((option, index) => (
             <button
               key={index}
+              type="button"
               className={`${styles.chipButton} ${formData.social_form === option ? styles.activeChip : ''}`}
               onClick={() => handleInputChange('social_form', option)}
             >

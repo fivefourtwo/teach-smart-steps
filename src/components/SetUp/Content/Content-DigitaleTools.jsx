@@ -29,6 +29,7 @@ function ContentDigitaleTools({ formData, handleInputChange }) {
           {chipOptions.map((option, index) => (
             <button
               key={index}
+              type="button"
               className={`${styles.chipButton} ${formData.digital_tools === option ? styles.activeChip : ''}`}
               onClick={() => handleInputChange('digital_tools', option)}
             >

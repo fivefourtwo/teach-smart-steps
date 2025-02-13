@@ -29,6 +29,7 @@ function ContentThema({ formData, handleInputChange }) {
           {chipOptions.map((option, index) => (
             <button
               key={index}
+              type="button"
               className={`${styles.chipButton} ${formData.topic === option ? styles.activeChip : ''}`}
               onClick={() => handleInputChange('topic', option)}
             >

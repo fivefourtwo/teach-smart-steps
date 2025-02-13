@@ -49,12 +49,13 @@ import PropTypes from 'prop-types';
 
 
 import styles from './ParameterInput.module.css';
-import { useState } from 'react';
 
-const ParameterInput = ({ type, isSelected, parameter, value, iconSrc }) => {
-  const [isHover, setIsHover] = useState(false);
+const ParameterInput = ({ type, isSelected, parameter, value, iconSrc, setActiveParameter }) => {
   const getStateClass = () => {
-    return isSelected ? styles.selected : isHover ? styles.hover : styles.normal;
+    if( type == "inputAi") {
+      return isSelected ? styles.selectedInputAi : styles.normal;
+    }
+    return isSelected ? styles.selected : styles.normal;
   };
 
   const getTypeClass = () => {
@@ -84,10 +85,13 @@ const ParameterInput = ({ type, isSelected, parameter, value, iconSrc }) => {
   };
 
   return (
-    <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} className={`${styles.parameterInput} ${getStateClass()} ${getTypeClass()}`}>
+    <div 
+    onClick={() => setActiveParameter(parameter)}
+    className={`${styles.parameterInput} ${getStateClass()} ${getTypeClass()}`}
+    >
       <div className={styles.leftSection}>
         <img loading="lazy" src={iconSrc} alt="" className={styles.icon} />
-        <div className={styles.parameter}>{parameter}</div>
+        <div className={styles.parameter}>{parameter + ": "}</div>
         {value && <div className={styles.input}>{value}</div>}
       </div>
       <img
@@ -107,6 +111,7 @@ ParameterInput.propTypes = {
   value: PropTypes.string,
   iconSrc: PropTypes.string.isRequired,
   badgeIcon: PropTypes.string.isRequired,
+  setActiveParameter: PropTypes.func.isRequired,
 };
 
 ParameterInput.defaultProps = {

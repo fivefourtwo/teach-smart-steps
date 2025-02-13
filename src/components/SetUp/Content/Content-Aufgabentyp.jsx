@@ -41,6 +41,7 @@ function ContentAufgabentyp({ formData, handleInputChange }) {
           {chipOptions.map((option, index) => (
             <button
               key={index}
+              type="button"
               className={`${styles.chipButton} ${textStyles['body-3-medium']} ${
                 formData.task_type === option ? styles.activeChip : ''
               }`}

@@ -29,6 +29,7 @@ function ContentSchulfach({ formData, handleInputChange }) {
           {chipOptions.map((option, index) => (
             <button
               key={index}
+              type="button"
               className={`${styles.chipButton} ${formData.subject === option ? styles.activeChip : ''}`}
               onClick={() => handleInputChange('subject', option)}
             >

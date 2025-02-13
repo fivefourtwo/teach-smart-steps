@@ -29,6 +29,7 @@ function ContentDauer({ formData, handleInputChange }) {
           {chipOptions.map((option, index) => (
             <button
               key={index}
+              type="button"
               className={`${styles.chipButton} ${formData.duration === option ? styles.activeChip : ''}`}
               onClick={() => handleInputChange('duration', option)}
             >

@@ -29,6 +29,7 @@ function ContentKompetenz({ formData, handleInputChange }) {
           {chipOptions.map((option, index) => (
             <button
               key={index}
+              type="button"
               className={`${styles.chipButton} ${formData.competency === option ? styles.activeChip : ''}`}
               onClick={() => handleInputChange('competency', option)}
             >

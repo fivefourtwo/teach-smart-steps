@@ -1,5 +1,5 @@
 import styles from './AufgabenSetUp.module.css';
-import textStyles from '../../styles/text-styles.module.css';
+// import textStyles from '../../styles/text-styles.module.css';
 import Header from '/src/components/common/Header';
 import Sidebar from './Sidebar/Sidebar';
 import InfoPopup from './InfoPopUp/InfoPopup';
@@ -10,7 +10,7 @@ import ContentSozialform from './Content/Content-Sozialform';
 import ContentAufgabentyp from './Content/Content-Aufgabentyp';
 import ContentThema from './Content/Content-Thema';
 import ContentDigitaleTools from './Content/Content-DigitaleTools';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function AufgabenSetUp() {
@@ -32,6 +32,11 @@ function AufgabenSetUp() {
   const handleInputChange = (name, value) => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
+
+  // This useEffect logs the current formData every time it changes.
+  useEffect(() => {
+    console.log('Current formData:', formData);
+  }, [formData]);
 
   // A submit handler similar to TeacherInput.jsx:
   const handleSubmit = async (e) => {
@@ -94,9 +99,9 @@ function AufgabenSetUp() {
         <Sidebar activeParameter={activeParameter} setActiveParameter={setActiveParameter} />
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           {renderContent()}
-          <button type="submit" className={textStyles['heading-1-semibold']}>
+          {/* <button type="submit" className={textStyles['heading-1-semibold']}>
             Aufgaben generieren
-          </button>
+          </button> */}
         </form>
         <InfoPopup />
       </div>
