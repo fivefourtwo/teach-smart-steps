@@ -11,10 +11,11 @@ import ContentAufgabentyp from './Content/Content-Aufgabentyp';
 import ContentThema from './Content/Content-Thema';
 import ContentDigitaleTools from './Content/Content-DigitaleTools';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function AufgabenSetUp() {
-  const [formData, setFormData] = useState({
+  const location = useLocation();
+  const initialFormData = {
     duration: '',
     subject: '',
     competency: '',
@@ -22,34 +23,39 @@ function AufgabenSetUp() {
     task_type: '',
     topic: '',
     digital_tools: ''
-  });
+  };
+
+  // Pre-fill the form if a material selection was passed
+  if (location.state) {
+    initialFormData.subject = location.state.subject || initialFormData.subject;
+    initialFormData.topic = location.state.topic || initialFormData.topic;
+    initialFormData.competency = location.state.competency || initialFormData.competency;
+  }
   
+  const [formData, setFormData] = useState(initialFormData);
   const [activeParameter, setActiveParameter] = useState("Dauer");
-  
   const navigate = useNavigate();
   
-  // A unified change handler that is passed into your content components so that they update formData:
+  // A unified change handler for updating formData from the content components.
   const handleInputChange = (name, value) => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  // This useEffect logs the current formData every time it changes.
+  // This useEffect logs formData every time it changes.
   useEffect(() => {
     console.log('Current formData:', formData);
   }, [formData]);
 
-  // Modified submit handler which works whether an event is passed or not.
+  // Modified submit handler.
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    // Build your form data for the API call
+    // Build form data for the API call.
     const formDataToSend = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value);
     });
-    // Include additional files if needed...
-
     try {
       const response = await fetch('/generate-tasks', {
         method: 'POST',
@@ -72,7 +78,7 @@ function AufgabenSetUp() {
     }
   };
   
-  // Choose which content component to render based on activeParameter:
+  // Choose which content component to render based on activeParameter.
   const renderContent = () => {
     switch (activeParameter) {
       case "Dauer":
@@ -106,7 +112,7 @@ function AufgabenSetUp() {
         />
         <form onSubmit={handleSubmit} className={styles.formContainer}>
           {renderContent()}
-          {/* You may want to keep the form submission accessible via enter-key as well */}
+          {/* Form submission is also accessible via the enter key */}
         </form>
         <InfoPopup />
       </div>

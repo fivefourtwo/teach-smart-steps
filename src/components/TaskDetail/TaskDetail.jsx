@@ -62,7 +62,7 @@ const TaskDetail = () => {
     <div className="task-detail-container">
       <Header />
       <div className="task-content">
-        <div dangerouslySetInnerHTML={{ __html: task }} />
+        <pre className="task-plain-text">{task}</pre>
         <button onClick={() => navigate(-1)} className="back-button">
           Zurück zur Übersicht
         </button>

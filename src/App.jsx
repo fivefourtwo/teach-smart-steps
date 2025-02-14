@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/input" element={<MaterialImport />} />
+        <Route path="/pre-setup" element={<MaterialImport />} />
         {/* <Route path="/input/teacher" element={<TeacherInput />} /> */}
         <Route path="/task-summaries" element={<TaskSummaries />} />
         <Route path="/task/:sessionId/:taskIndex" element={<TaskDetail />} />

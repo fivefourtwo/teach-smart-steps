@@ -2,6 +2,7 @@ import styles from './Content.module.css';
 import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import PropTypes from 'prop-types';
 import textStyles from '../../../styles/text-styles.module.css';
+import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch';
 
 function ContentThema({ formData, handleInputChange }) {
   // Define sample topics. Adjust these options as needed.
@@ -16,9 +17,11 @@ function ContentThema({ formData, handleInputChange }) {
           </h1>
           <div className={styles.automaticFillSwitch}>
             <span className={`${styles.switchLabel} ${textStyles['body-2-medium']}`}>
-              automatisch ausfüllen
+              auto fill
             </span>
-            <div className={styles.switch} role="switch" aria-checked="false" tabIndex="0" />
+            <ToggleSwitch onToggle={(isActive) => {
+              handleInputChange('topic', isActive ? "auto fill" : "");
+            }} />
           </div>
         </div>
         <p className={`${styles.contentDescription} ${textStyles['heading-2-medium']}`}>

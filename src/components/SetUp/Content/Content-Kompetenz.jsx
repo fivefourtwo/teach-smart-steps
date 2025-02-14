@@ -2,6 +2,7 @@ import styles from './Content.module.css';
 import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import PropTypes from 'prop-types';
 import textStyles from '../../../styles/text-styles.module.css';
+// import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch';
 
 function ContentKompetenz({ formData, handleInputChange }) {
   // Define sample chip options for competency.
@@ -14,12 +15,12 @@ function ContentKompetenz({ formData, handleInputChange }) {
           <h1 className={`${styles.contentHeading} ${textStyles['heading-1-semibold']}`}>
             Kompetenz
           </h1>
-          <div className={styles.automaticFillSwitch}>
+          {/* <div className={styles.automaticFillSwitch}>
             <span className={`${styles.switchLabel} ${textStyles['body-2-medium']}`}>
-              automatisch ausfüllen
+              auto fill
             </span>
-            <div className={styles.switch} role="switch" aria-checked="false" tabIndex="0" />
-          </div>
+            <ToggleSwitch />
+          </div> */}
         </div>
         <p className={`${styles.contentDescription} ${textStyles['heading-2-medium']}`}>
           Welche Kompetenz soll mit dieser Aufgabe gefördert werden?

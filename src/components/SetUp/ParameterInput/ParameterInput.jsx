@@ -50,16 +50,28 @@ import PropTypes from 'prop-types';
 
 import styles from './ParameterInput.module.css';
 
-const ParameterInput = ({ type, isSelected, parameter, value, iconSrc, setActiveParameter }) => {
+const ParameterInput = ({
+  type,
+  isSelected,
+  parameter,
+  value,
+  iconSrc,
+  // badgeIcon,
+  setActiveParameter,
+}) => {
+  // When the toggle is activated, value will be "auto fill".
+  // In that case, override the type to "inputAi".
+  const effectiveType = value === "auto fill" ? "inputAi" : type;
+
   const getStateClass = () => {
-    if( type == "inputAi") {
+    if (effectiveType === "inputAi") {
       return isSelected ? styles.selectedInputAi : styles.normal;
     }
     return isSelected ? styles.selected : styles.normal;
   };
 
   const getTypeClass = () => {
-    switch (type) {
+    switch (effectiveType) {
       case 'inputUser':
         return styles.inputUser;
       case 'inputAi':
@@ -72,7 +84,7 @@ const ParameterInput = ({ type, isSelected, parameter, value, iconSrc, setActive
   };
 
   const getTypeIconSrc = () => {
-    switch (type) {
+    switch (effectiveType) {
       case 'inputUser':
         return 'public/badges/Badge-userinput.png';
       case 'inputAi':
@@ -86,8 +98,8 @@ const ParameterInput = ({ type, isSelected, parameter, value, iconSrc, setActive
 
   return (
     <div 
-    onClick={() => setActiveParameter(parameter)}
-    className={`${styles.parameterInput} ${getStateClass()} ${getTypeClass()}`}
+      onClick={() => setActiveParameter(parameter)}
+      className={`${styles.parameterInput} ${getStateClass()} ${getTypeClass()}`}
     >
       <div className={styles.leftSection}>
         <img loading="lazy" src={iconSrc} alt="" className={styles.icon} />
@@ -98,7 +110,7 @@ const ParameterInput = ({ type, isSelected, parameter, value, iconSrc, setActive
         loading="lazy"
         src={getTypeIconSrc()}
         alt=""
-        className={`${styles.rightIcon} ${type === 'inputAi' ? styles.aiRightIcon : ''}`}
+        className={`${styles.rightIcon} ${effectiveType === 'inputAi' ? styles.aiRightIcon : ''}`}
       />
     </div>
   );

@@ -1,9 +1,10 @@
 import styles from '../MaterialImport.module.css';
 import { useState } from 'react';
+
 function GradeSelection() {
   const [grades, setGrades] = useState([
     { id: '4b', label: 'Klasse: 4b', selected: false },
-    { id: '3a', label: 'Klasse: 3a', selected: true },
+    { id: '3a', label: 'Klasse: 3a', selected: false },
   ]);
 
   const handleGradeChange = (selectedId) => {

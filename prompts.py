@@ -19,33 +19,53 @@ Medien und ihre Wirkung,Den Einfluss von Medien auf Wahrnehmung und Verhalten re
 # Description: Generates a classroom task prompt based on form data and
 # optional PDF text input.
 ###################################################
-def create_task_prompt(form_data, pdf_text=""):
-    """
-    Create the prompt for generating a classroom task.
-    """
-    prompt = f"""Erstelle eine Unterrichtsaufgabe mit folgenden Vorgaben:
+def create_task_prompt(form_data):
+    prompt = f"""Du bist ein KI-Modell, das Lehrkräfte unterstützt, individuelle und zielgerichtete Unterrichtsaufgaben zu entwerfen. Erstelle bitte 2 verschiedene Aufgaben für die Klassenstufe 3, die im Fach {form_data.get('subject', '')} verwendet werden sollen.
 
-Dauer: {form_data.get('duration', '')}
-Schulfach: {form_data.get('subject', '')}
-Kompetenz: {form_data.get('competency', '')}
-Sozialform: {form_data.get('social_form', '')}
-Aufgabentyp: {form_data.get('task_type', '')}
-Thema: {form_data.get('topic', '')}
-Digitale Tools: {form_data.get('digital_tools', '')}
+Die Aufgabe soll sich auf die Kompetenz "{form_data.get('competency', '')}" beziehen.
 
-Dein Output soll für jede Aufgabe Folgendermaßen aufgebaut sein:
-Aufgabenvorschlag 1:
-Schulfach, Thema, Sozialform, Zeit
-Lernziel des Schulfachs 
-Inhalt aus dem Medienbidlung Lehrplan
-Grobe Aufgebenstellung für die Schüler
-Werden Digitale Tools benötigt? Ja/Nein/Wahlweise
+Aktuell wird in diesem Fach das Thema "{form_data.get('topic', '')}" besprochen.
+(Hinweis: Falls dieser Wert "auto fill" enthält, bestimme bitte ein passendes Thema basierend auf dem Kontext.)
 
-{f'Berücksichtige dabei folgende Informationen aus dem PDF-Dokument: {pdf_text}' if pdf_text else ''}
+Die Aufgabe soll in der Sozialform "{form_data.get('social_form', '')}" durchgeführt werden.
+(Hinweis: Falls dieser Wert "auto fill" enthält, wähle bitte eine geeignete Sozialform.)
 
-Falls Angaben fehlen, fülle die fehlenden Angaben mit passenden Werten aus. Im Falle von Medienkompetenzen, wähle eine passende Medienkompetenz aus dem {MEDIA_COMPETENCY_PLAN} aus.
+Die Aufgabe soll ungefähr {form_data.get('duration', '')} dauern.
 
-Generiere die Aufgabe EXAKT in der vorgegebenen HTML-Struktur mit den CSS-Klassen."""
+Der Aufgabentyp soll "{form_data.get('task_type', '')}" sein.
+(Hinweis: Falls dieser Wert "auto fill" enthält, bestimme bitte einen passenden Aufgabentyp.)
+
+Der Einsatz von digitalen Tools ist als "{form_data.get('digital_tools', '')}" angegeben.
+(Hinweis: Falls dieser Wert "auto fill" enthält, entscheide bitte, ob und welche digitalen Tools sinnvoll eingesetzt werden.)
+
+Nutze zur Auswahl eines passenden Inhalts den folgenden Medienbildungslehrplan. Wähle einen "Inhalt" aus einem der aufgeführten Kompetenzbereiche aus:
+{MEDIA_COMPETENCY_PLAN}
+
+Jede Aufgabe soll folgende Struktur als reiner Plain-Text einhalten:
+
+Aufgabe [Nummer]:
+    <h1>Titel der Aufgabe</h1>
+    <h2>Untertitel</h2>
+    <p>Kurze Beschreibung</p>
+    
+    <h2>Aufgabenstellung für die Schüler*innen</h2>
+    <p>Die Aufgabenstellung für die Schüler*innen</p>
+    
+    <h2>Schritt für Schritt Anleitung</h2>
+    <ul>
+        <li><strong>1. Schritt</strong> Beschreibung des ersten Schritts</li>
+        <li><strong>2. Schritt:</strong> Beschreibung des zweiten Schritts</li>
+        <li><strong>3. Schritt:</strong> Beschreibung des dritten Schritts</li>
+        <li><strong>4. Schritt:</strong> Beschreibung des vierten Schritts</li>
+        <li><strong>5. Schritt:</strong> Beschreibung des fünften Schritts</li>
+        und so weiter
+    </ul>
+------------------------------------------------------
+
+Generiere den vollständigen Output als reinen Plain-Text und verwende eine klare und motivierende Sprache.
+
+Erstelle 2 unterschiedliche Aufgabenvorschläge, nummeriert 1 und 2.
+"""
     return prompt
 
 ###################################################

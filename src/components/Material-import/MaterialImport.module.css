@@ -57,7 +57,7 @@
     justify-content: center;
     gap: 40px 160px;
     width: 100%;
-    height: 100%;
+    height: 550px;
   }
   
   .grade {
@@ -86,8 +86,20 @@
     font: 600 32px/40px Manrope, -apple-system, Roboto, Helvetica, sans-serif;
   }
 
-  .gradeForm,
+  .gradeForm {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    border-radius: 8px;
+    border: 1px solid var(--beige1);
+    background: var(--beige3-background);
+    padding: 26px;
+    width: 100%;
+    overflow: hidden;
+  }
+  
   .uploadForm {
+    margin-top: 24px;
     box-sizing: border-box;
     display: flex;
     align-items: flex-start;
@@ -212,7 +224,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 24px;
+    /* gap: 24px; */
   }
   
   .options {

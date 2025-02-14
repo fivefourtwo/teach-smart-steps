@@ -2,6 +2,7 @@ import styles from './Content.module.css';
 import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import PropTypes from 'prop-types';
 import textStyles from '../../../styles/text-styles.module.css';
+// import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch';
 
 function ContentSchulfach({ formData, handleInputChange }) {
   // Define sample chip options for school subjects.
@@ -14,12 +15,12 @@ function ContentSchulfach({ formData, handleInputChange }) {
           <h1 className={`${styles.contentHeading} ${textStyles['heading-1-semibold']}`}>
             Schulfach
           </h1>
-          <div className={styles.automaticFillSwitch}>
+          {/* <div className={styles.automaticFillSwitch}>
             <span className={`${styles.switchLabel} ${textStyles['body-2-medium']}`}>
-              automatisch ausfüllen
+              auto fill
             </span>
-            <div className={styles.switch} role="switch" aria-checked="false" tabIndex="0" />
-          </div>
+            <ToggleSwitch />
+          </div> */}
         </div>
         <p className={`${styles.contentDescription} ${textStyles['heading-2-medium']}`}>
           Für welches Schulfach soll die Aufgabe erstellt werden?

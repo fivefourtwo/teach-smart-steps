@@ -2,6 +2,7 @@ import styles from './Content.module.css';
 import StatusIndicator from '../StatusIndicator/StatusIndicator';
 import PropTypes from 'prop-types';
 import textStyles from '../../../styles/text-styles.module.css';
+import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch';
 
 function ContentDigitaleTools({ formData, handleInputChange }) {
   // Define sample chip options for digital tools.
@@ -16,9 +17,11 @@ function ContentDigitaleTools({ formData, handleInputChange }) {
           </h1>
           <div className={styles.automaticFillSwitch}>
             <span className={`${styles.switchLabel} ${textStyles['body-2-medium']}`}>
-              automatisch ausfüllen
+              auto fill
             </span>
-            <div className={styles.switch} role="switch" aria-checked="false" tabIndex="0" />
+            <ToggleSwitch onToggle={(isActive) => {
+              handleInputChange('digital_tools', isActive ? "auto fill" : "");
+            }} />
           </div>
         </div>
         <p className={`${styles.contentDescription} ${textStyles['heading-2-medium']}`}>

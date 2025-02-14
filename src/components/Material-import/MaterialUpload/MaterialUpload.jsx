@@ -1,35 +1,65 @@
 import styles from '../MaterialImport.module.css';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-function MaterialUpload() {
+function MaterialUpload({ onMaterialSelect }) {
+  const navigate = useNavigate();
   const [materials, setMaterials] = useState([
-    { id: 'religion', label: 'Religion_AB.pdf', selected: true },
+    { id: 'religion', label: 'Religion_AB.pdf', selected: false },
     { id: 'grimm', label: 'www.grimmsmaerchen.de', selected: false },
-    { id: 'konsum', label: 'Nachhaltiger_Konsum_AB.png', selected: false },
+    { id: 'konsum', label: 'Nachhaltiger Konsum_AB.png', selected: false },
   ]);
 
   const [uploadOptions, setUploadOptions] = useState([
-    { id: 'select', label: 'Material wählen', selected: true },
+    { id: 'select', label: 'Material wählen', selected: false },
     { id: 'continue', label: 'Ohne fortfahren', selected: false },
   ]);
 
+  // Mapping of material IDs to fixed parameter values.
+  const materialParameters = {
+    religion: {
+      topic: "Selbstwertschätzung",
+      subject: "Religion",
+      competency: "Mensch - be­schrei­ben, was sie selbst und an­de­re aus­macht"
+    },
+    grimm: {
+      topic: "Märchen",
+      subject: "Deutsch",
+      competency: "Mit Texten und anderen Medien umgehen - Lesefähigkeit erweitern"
+    },
+    konsum: {
+      topic: "Nachhaltiger Konsum",
+      subject: "Sachunterricht",
+      competency: "Demokratie und Gesellschaft - Arbeit und Konsum"
+    }
+  };
+
   const handleMaterialChange = (selectedId) => {
-    setMaterials((prevMaterials) =>
-      prevMaterials.map((material) => ({
+    setMaterials(prevMaterials =>
+      prevMaterials.map(material => ({
         ...material,
-        selected: material.id === selectedId,
+        selected: material.id === selectedId
+      }))
+    );
+    if (onMaterialSelect && materialParameters[selectedId]) {
+      onMaterialSelect(materialParameters[selectedId]);
+    }
+    // Redirect to /setup and pass the fixed parameter values in location state.
+    navigate("/setup", { state: materialParameters[selectedId] });
+  };
+
+  const handleUploadOptionChange = (selectedId) => {
+    setUploadOptions(prevOptions =>
+      prevOptions.map(option => ({
+        ...option,
+        selected: option.id === selectedId
       }))
     );
   };
 
-  const handleUploadOptionChange = (selectedId) => {
-    setUploadOptions((prevOptions) =>
-      prevOptions.map((option) => ({
-        ...option,
-        selected: option.id === selectedId,
-      }))
-    );
-  };
+  // Only show material options when the "select" option is selected.
+  const showMaterials = uploadOptions.find(option => option.id === 'select')?.selected;
 
   return (
     <section className={styles.upload}>
@@ -37,23 +67,25 @@ function MaterialUpload() {
         Möchtest du <span className={styles.highlight}>Material</span> für den Kontext hochladen?
       </h2>
       <div className={styles.uploadOptions}>
-        <div className={styles.options}>
-          {materials.map((material) => (
-            <div key={material.id} className={styles.radioButton}>
-              <input
-                type="radio"
-                id={`material-${material.id}`}
-                name="material"
-                className={styles.radioInput}
-                checked={material.selected}
-                onChange={() => handleMaterialChange(material.id)}
-              />
-              <label htmlFor={`material-${material.id}`} className={styles.radioLabel}>
-                {material.label}
-              </label>
-            </div>
-          ))}
-        </div>
+        {showMaterials && (
+          <div className={styles.options}>
+            {materials.map(material => (
+              <div key={material.id} className={styles.radioButton}>
+                <input
+                  type="radio"
+                  id={`material-${material.id}`}
+                  name="material"
+                  className={styles.radioInput}
+                  checked={material.selected}
+                  onChange={() => handleMaterialChange(material.id)}
+                />
+                <label htmlFor={`material-${material.id}`} className={styles.radioLabel}>
+                  {material.label}
+                </label>
+              </div>
+            ))}
+          </div>
+        )}
         <div className={styles.uploadForm}>
           <div className={styles.container}>
             <img
@@ -73,7 +105,7 @@ function MaterialUpload() {
                 </p>
               </div>
               <div className={styles.selectionWrapper}>
-                {uploadOptions.map((option) => (
+                {uploadOptions.map(option => (
                   <label
                     key={option.id}
                     htmlFor={`upload-${option.id}`}
@@ -100,5 +132,9 @@ function MaterialUpload() {
     </section>
   );
 }
+
+MaterialUpload.propTypes = {
+  onMaterialSelect: PropTypes.func.isRequired,
+};
 
 export default MaterialUpload;

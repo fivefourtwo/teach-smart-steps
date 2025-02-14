@@ -7,6 +7,7 @@ from io import StringIO
 import uuid
 from flask_cors import CORS
 import json
+import re  # Added for markdown code fence removal
 
 # Import all prompt helper functions and constants from prompts.py
 from prompts import (
@@ -59,12 +60,11 @@ def generate_suggestion():
             return jsonify({'error': 'Invalid field'}), 400
 
         response = openai.chat.completions.create(
-            model="gpt-4o-mini-2024-07-18",
+            model="o1-minio-mini-2024-07-18",
             messages=[
                 {"role": "system", "content": "Du bist ein hilfreicher Assistent für Lehrkräfte."},
                 {"role": "user", "content": prompt_str}
-            ],
-            max_tokens=100
+            ]
         )
 
         suggestion = response.choices[0].message.content.strip()
@@ -79,42 +79,39 @@ def generate_tasks():
         return jsonify({'error': 'Only POST method is allowed'}), 405
 
     try:
+        # Use keys that match the expected ones in create_task_prompt
         form_data = {
-            'grade': request.form.get('grade', ''),
             'subject': request.form.get('subject', ''),
-            'curriculum_competency': request.form.get('curriculum_competency', ''),
-            'current_topic': request.form.get('current_topic', ''),
+            'competency': request.form.get('competency', ''),
+            'topic': request.form.get('topic', ''),
             'social_form': request.form.get('social_form', ''),
-            'time': request.form.get('time', ''),
-            'media_competency': request.form.get('media_competency', ''),
-            'task_format': request.form.get('task_format', ''),
-            'student_interests': request.form.get('student_interests', ''),
+            'duration': request.form.get('duration', ''),
+            'task_type': request.form.get('task_type', ''),
             'digital_tools': request.form.get('digital_tools', '')
         }
 
-        # Generate the task prompt using only form data.
+        # Generate the task prompt using the form data
         task_prompt = create_task_prompt(form_data)
         response = openai.chat.completions.create(
-            model="gpt-4",
+            model="o1-mini",
             messages=[
-                {"role": "system", "content": SYSTEM_TASK_PROMPT},
                 {"role": "user", "content": task_prompt}
-            ],
-            max_tokens=1000
+            ]
         )
 
         tasks = [response.choices[0].message.content.strip()]
         summaries = []
         for task in tasks:
             summary_response = openai.chat.completions.create(
-                model="gpt-4",
+                model="o1-mini",
                 messages=[
-                    {"role": "system", "content": "Du bist ein präziser JSON-Generator."},
                     {"role": "user", "content": SUMMARY_PROMPT + "\n\nAufgabe:\n" + task}
-                ],
-                max_tokens=300
+                ]
             )
             raw_content = summary_response.choices[0].message.content.strip()
+            # Remove markdown code fences, e.g. ```json ... ```
+            raw_content = re.sub(r"^```(?:\w+)?\s*", "", raw_content)
+            raw_content = re.sub(r"\s*```$", "", raw_content)
             try:
                 summaries.append(json.loads(raw_content))
             except json.JSONDecodeError as e:
