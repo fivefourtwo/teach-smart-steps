@@ -17,13 +17,13 @@ function BreadCrumb() {
         <img src="/public/icons/black/Chevron-right.svg" alt="Chevron Right" className={styles.chevronIcon} />
       </div>
       <button className={`${styles.breadCrumbButton} ${textStyles['body-2-medium']}`}>
-        Startmethode
+        Material-Import
       </button>
       <div className={styles.separator}>
         <img src="/public/icons/black/Chevron-right.svg" alt="Chevron Right" className={styles.chevronIcon} />
       </div>
       <button className={`${styles.breadCrumbButton} ${textStyles['body-2-medium']}`}>
-        Material-Import
+        Setup
       </button>
     </nav>
   );

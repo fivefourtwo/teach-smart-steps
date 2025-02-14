@@ -1,6 +1,6 @@
 .breadCrumb {
-    width: auto;
-    height: 56px;
+    width: 516px;
+    min-height: 56px;
     padding-left: 16px;
     border-radius: 8px;
     border: 1px solid var(--beige1);

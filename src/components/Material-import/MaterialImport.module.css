@@ -1,0 +1,253 @@
+.materialImport {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--beige3-background);
+    overflow: hidden;
+    height: 100vh;
+  }
+  
+  .body {
+    display: flex;
+    flex-direction: column;
+    /* height: 987px; */
+    width: 100%;
+    height: 100%;
+    padding: 16px 24px 180px;
+    overflow: hidden;
+    justify-content: space-between;
+    box-sizing: border-box;
+    gap: 100px;
+  }
+  
+  /* .breadCrumb {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    width: 532px;
+    max-width: 100%;
+    padding-left: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--beige1);
+    background: var(--beige4);
+    overflow: hidden;
+  } */
+  
+  .breadCrumbContent {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-width: 240px;
+  }
+  
+  .breadCrumbButton {
+    border-radius: 4px;
+    min-height: 32px;
+    padding: 5px 12px;
+    background: none;
+    border: none;
+    color: var(--color-black);
+    font: 500 16px Manrope, sans-serif;
+    cursor: pointer;
+  }
+  
+  .preSetUpNew {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px 160px;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .grade {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    width: 391px;
+    min-width: 240px;
+    height: 100%;
+  }
+
+  .upload {
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    flex-direction: column;
+    width: 391px;
+    min-width: 240px;
+    height: 100%;
+    gap: 32px;
+  }
+
+  .heading {
+    margin: 0;
+    color: var(--color-black);
+    font: 600 32px/40px Manrope, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+
+  .gradeForm,
+  .uploadForm {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    border-radius: 8px;
+    border: 1px solid var(--beige1);
+    background: var(--beige3-background);
+    padding: 26px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .highlight {
+    color: var(--color-orange);
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .gradeIcon,
+  .uploadIcon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+  
+  .contentWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+  }
+  
+  .textWrapper {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .formTitle,
+  .uploadTitle {
+    margin: 0;
+    color: var(--grey1);
+    font: 650 16px Manrope, sans-serif;
+  }
+  
+  .formDescription,
+  .uploadDescription {
+    margin: 0;
+    color: var(--grey2);
+    font: 500 16px Manrope, sans-serif;
+  }
+  
+  .selectionWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .radioButtonBig {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid var(--grey3);
+    padding: 14px 16px;
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .radioLabel {
+    color: var(--grey3);
+    font: 500 14px Manrope, sans-serif;
+  }
+  
+  .selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+  }
+  
+  .radioInput {
+    /* position: absolute;
+    opacity: 0; */
+    margin: 0;
+    background-color: var(--color-orange) !important;
+    color: var(--color-orange) !important;
+    cursor: pointer;
+  }
+  
+  .radioCircle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid var(--grey3);
+  }
+  
+  .radioSelected {
+    border: 1px solid var(--color-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .radioSelected::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-orange);
+  }
+  
+  .uploadOptions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 24px;
+  }
+  
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--grey2);
+    font: 500 14px Manrope, sans-serif;
+  }
+  
+  .radioButton {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--beige1);
+    background-color: var(--beige3-background);
+    padding: 8px 10px;
+    cursor: pointer;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Override the default color of radio buttons using accent-color */
+  input[type="radio"] {
+    accent-color: var(--color-orange);
+  }
