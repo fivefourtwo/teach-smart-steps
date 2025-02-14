@@ -56,6 +56,10 @@ function MaterialUpload({ onMaterialSelect }) {
         selected: option.id === selectedId
       }))
     );
+    if (selectedId === "continue") {
+      // Navigate without any material-specific state
+      navigate("/setup", { state: {} });
+    }
   };
 
   // Only show material options when the "select" option is selected.

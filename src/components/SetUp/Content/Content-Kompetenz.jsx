@@ -5,8 +5,38 @@ import textStyles from '../../../styles/text-styles.module.css';
 // import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch';
 
 function ContentKompetenz({ formData, handleInputChange }) {
-  // Define sample chip options for competency.
-  const chipOptions = ['Verstehen', 'Analysieren', 'Kreativ handeln'];
+  // Determine competency chip options based on the selected school subject
+  let chipOptions = [];
+  
+  if (formData.subject === "Deutsch") {
+    chipOptions = [
+      "Mit Texten und anderen Medien umgehen",
+      "Sprache und Sprachgebrauch untersuchen",
+      "Präsentieren",
+      "Leseverstehen entwickeln",
+      "Texte verfassen – richtig schreiben"
+    ];
+  } else if (formData.subject === "Sachunterricht") {
+    chipOptions = [
+      "Demokratie und Gesellschaft",
+      "Natur und Leben",
+      "Naturphänomene und Technik",
+      "Raum und Mobilität",
+      "Zeit und Wandel",
+      "Experimente"
+    ];
+  } else if (formData.subject === "Religion") {
+    chipOptions = [
+      "Mensch, Welt und Verantwortung",
+      "Bibel",
+      "Gott",
+      "Jesus Christus",
+      "Kirche und Kirchen",
+      "Religionen"
+    ];
+  } else {
+    chipOptions = ['Verstehen', 'Analysieren', 'Kreativ handeln'];
+  }
 
   return (
     <main className={styles.content}>

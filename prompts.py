@@ -20,7 +20,7 @@ Medien und ihre Wirkung,Den Einfluss von Medien auf Wahrnehmung und Verhalten re
 # optional PDF text input.
 ###################################################
 def create_task_prompt(form_data):
-    prompt = f"""Du bist ein KI-Modell, das Lehrkräfte unterstützt, individuelle und zielgerichtete Unterrichtsaufgaben zu entwerfen. Erstelle bitte 2 verschiedene Aufgaben für die Klassenstufe 3, die im Fach {form_data.get('subject', '')} verwendet werden sollen.
+    prompt = f"""Du bist ein KI-Modell, das Lehrkräfte unterstützt, individuelle und zielgerichtete Unterrichtsaufgaben zu entwerfen. Erstelle bitte eine Aufgabe für die Klassenstufe 3, die im Fach {form_data.get('subject', '')} verwendet werden soll.
 
 Die Aufgabe soll sich auf die Kompetenz "{form_data.get('competency', '')}" beziehen.
 
@@ -41,30 +41,43 @@ Der Einsatz von digitalen Tools ist als "{form_data.get('digital_tools', '')}" a
 Nutze zur Auswahl eines passenden Inhalts den folgenden Medienbildungslehrplan. Wähle einen "Inhalt" aus einem der aufgeführten Kompetenzbereiche aus:
 {MEDIA_COMPETENCY_PLAN}
 
-Jede Aufgabe soll folgende Struktur als reiner Plain-Text einhalten:
+Halte dich dabei exakt an die folgende Struktur und Formatierung:
 
-Aufgabe [Nummer]:
-    <h1>Titel der Aufgabe</h1>
-    <h2>Untertitel</h2>
-    <p>Kurze Beschreibung</p>
-    
-    <h2>Aufgabenstellung für die Schüler*innen</h2>
-    <p>Die Aufgabenstellung für die Schüler*innen</p>
-    
-    <h2>Schritt für Schritt Anleitung</h2>
-    <ul>
-        <li><strong>1. Schritt</strong> Beschreibung des ersten Schritts</li>
-        <li><strong>2. Schritt:</strong> Beschreibung des zweiten Schritts</li>
-        <li><strong>3. Schritt:</strong> Beschreibung des dritten Schritts</li>
-        <li><strong>4. Schritt:</strong> Beschreibung des vierten Schritts</li>
-        <li><strong>5. Schritt:</strong> Beschreibung des fünften Schritts</li>
-        und so weiter
-    </ul>
+Benutzte Parameter:
+- Fach: {form_data.get('subject', '')}
+- Kompetenz: {form_data.get('competency', '')}
+- Thema: {form_data.get('topic', '')}
+- Sozialform: {form_data.get('social_form', '')}
+- Dauer: {form_data.get('duration', '')}
+- Aufgabentyp: {form_data.get('task_type', '')}
+- Ausgewählter Inhalt aus dem Medienbildungslehrplan:
+
+Vollständiges Aufgabenkonzept:
+[Titel des Konzepts]
+[Prägnante Leitfrage]
+Schreibe eine kurze Einführung, die das Thema der Aufgabe erklärt. Stelle dar, warum es für die Schüler:innen relevant ist, und beschreibe, welche Kompetenzen oder Fähigkeiten dabei geschult werden. Die Einführung soll maximal 3 Sätze lang sein.
+
+Aufgabenstellung für die Schüler*innen
+Beschreibe die Aufgabe in einfacher, klarer Sprache. Erkläre, was die Schüler:innen tun sollen, und formuliere eine zentrale Reflexionsfrage, die am Ende der Aufgabe beantwortet werden soll.
+
+Schritt für Schritt
+1. Schritt:
+
+2. Schritt:
+
+3. Schritt: 
+
+4. Schritt:
+
+5. Schritt:
+
+Zusätzliche Vorgaben für die KI:
+Halte die Struktur genau ein.
+Verwende klare, verständliche Sprache, die sich für Schüler:innen eignet.
+Formatiere die Überschriften und Schritte sinnvoll.
+Nutze maximal 3 Sätze pro Abschnitt, um die Inhalte kompakt zu halten.
 ------------------------------------------------------
 
-Generiere den vollständigen Output als reinen Plain-Text und verwende eine klare und motivierende Sprache.
-
-Erstelle 2 unterschiedliche Aufgabenvorschläge, nummeriert 1 und 2.
 """
     return prompt
 

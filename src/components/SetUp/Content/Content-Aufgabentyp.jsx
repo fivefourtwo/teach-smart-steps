@@ -5,20 +5,46 @@ import textStyles from '../../../styles/text-styles.module.css';
 import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch';
 
 function ContentAufgabentyp({ formData, handleInputChange }) {
-  // Define the chip options for "Aufgabentyp". Adjust the options as needed.
-  const chipOptions = [
-    "Lückentexte",
-    "Zuordnungsaufgaben",
-    "Reihenfolgen ordnen",
-    "Multiple-Choice-Aufgaben",
-    "Freies Schreiben",
-    "Mindmaps erstellen",
-    "Richtig/Falsch-Aufgaben",
-    "Tabellen ausfüllen",
-    "Partner- oder Gruppenarbeit",
-    "Reflexionsaufgaben"
-  ]
-  
+  // Set task type options based on the selected social form.
+  let chipOptions = [];
+
+  if (formData.social_form === "Einzelarbeit") {
+    chipOptions = [
+      "Lückentext ausfüllen",
+      "Recherchieren & Notizen machen",
+      "Textanalyse & Markierung",
+      "Multiple-Choice-Quiz",
+      "Storyboard zeichnen",
+      "Reflexionsfrage beantworten"
+    ];
+  } else if (formData.social_form === "Partnerarbeit") {
+    chipOptions = [
+      "Erklärvideo analysieren",
+      "Interview führen",
+      "Fehlersuche im Text",
+      "Mindmap erstellen",
+      "Diskussionskarte ziehen",
+      "Schrittweises Erklären"
+    ];
+  } else if (formData.social_form === "Gruppenarbeit") {
+    chipOptions = [
+      "Rollenspiel durchführen",
+      "Plakat oder Poster gestalten",
+      "Erklärungsvideo drehen",
+      "Gruppendiskussion mit Pro & Contra",
+      "Quiz für die Klasse erstellen",
+      "Projektplanung & Aufgabenverteilung"
+    ];
+  } else if (formData.social_form === "Plenum") {
+    chipOptions = [
+      "Brainstorming & Ideensammlung",
+      "Expert:innen-Runde",
+      "Live-Umfrage oder Abstimmung",
+      "Erfahrungsberichte teilen",
+      "Fishbowl-Diskussion",
+      "Kreative Präsentation"
+    ];
+  }
 
   return (
     <main className={styles.content}>
@@ -39,15 +65,13 @@ function ContentAufgabentyp({ formData, handleInputChange }) {
         <p className={`${styles.contentDescription} ${textStyles['heading-2-medium']}`}>
           Welcher Aufgabentyp soll verwendet werden?
         </p>
-        {/* Render chip buttons instead of an input field */}
+        {/* Render chip buttons based on the selected social form */}
         <div className={styles.chips}>
           {chipOptions.map((option, index) => (
             <button
               key={index}
               type="button"
-              className={`${styles.chipButton} ${textStyles['body-3-medium']} ${
-                formData.task_type === option ? styles.activeChip : ''
-              }`}
+              className={`${styles.chipButton} ${textStyles['body-3-medium']} ${formData.task_type === option ? styles.activeChip : ''}`}
               onClick={() => handleInputChange('task_type', option)}
             >
               {option}

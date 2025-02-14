@@ -102,6 +102,12 @@
   cursor: pointer;
 }
 
+.activeChip {
+  background-color: var(--orange3);
+  color: var(--orange1);
+  border: 0.5px solid var(--orange1);
+}
+
 .addChipButton {
   display: flex;
   align-items: center;

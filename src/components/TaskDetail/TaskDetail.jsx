@@ -1,68 +1,70 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import Header from '../common/Header';
 import './TaskDetail.css';
 
-const FLASK_SERVER = 'http://127.0.0.1:5000';
-
 const TaskDetail = () => {
   const { sessionId, taskIndex } = useParams();
-  const [task, setTask] = useState(null);
+  const [task, setTask] = useState('');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTask = async () => {
-      try {
-        const response = await fetch(`${FLASK_SERVER}/get-task/${sessionId}/${taskIndex}`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        if (data.success) {
-          setTask(data.task);
+    if (sessionId === 'direct') {
+      // Retrieve generated tasks from localStorage
+      const storedTasks = localStorage.getItem('generatedTasks');
+      if (storedTasks) {
+        const tasks = JSON.parse(storedTasks);
+        const idx = parseInt(taskIndex, 10);
+        if (tasks && tasks.length > idx) {
+          setTask(tasks[idx]);
         } else {
-          setError(data.error || 'Failed to load task');
+          setTask('Aufgabe nicht gefunden.');
         }
-      } catch (error) {
-        console.error('Error fetching task:', error);
-        setError('Failed to load task. Please try again.');
-      } finally {
-        setLoading(false);
+      } else {
+        setTask('Keine gespeicherten Aufgaben gefunden.');
       }
-    };
-
-    fetchTask();
+    } else {
+      // Optionally handle other sessionId cases if needed
+      setTask('Aufgabe nicht gefunden.');
+    }
+    setLoading(false);
   }, [sessionId, taskIndex]);
 
-  if (loading) return (
-    <div className="task-detail-container">
-      <Header />
-      <div className="loading">Lade Aufgabe...</div>
-    </div>
-  );
-
-  if (error) return (
-    <div className="task-detail-container">
-      <Header />
-      <div className="error-container">
-        <p className="error-message">{error}</p>
-        <button onClick={() => navigate(-1)} className="back-button">
-          Zurück
-        </button>
+  if (loading)
+    return (
+      <div className="task-detail-container">
+        <Header />
+        <div className="loading">Lade Aufgabe...</div>
       </div>
-    </div>
-  );
+    );
+
+  if (error)
+    return (
+      <div className="task-detail-container">
+        <Header />
+        <div className="error-container">
+          <p className="error-message">{error}</p>
+          <button onClick={() => navigate(-1)} className="back-button">
+            Zurück
+          </button>
+        </div>
+      </div>
+    );
 
   return (
     <div className="task-detail-container">
       <Header />
       <div className="task-content">
-        <pre className="task-plain-text">{task}</pre>
+        <ReactMarkdown
+          components={{
+            h1: ({ props }) => <h1 className="custom-title" {...props} />
+          }}
+        >
+          {task}
+        </ReactMarkdown>
         <button onClick={() => navigate(-1)} className="back-button">
           Zurück zur Übersicht
         </button>

@@ -6,7 +6,7 @@ import textStyles from '../../../styles/text-styles.module.css';
 
 function ContentSchulfach({ formData, handleInputChange }) {
   // Define sample chip options for school subjects.
-  const chipOptions = ['Mathematik', 'Deutsch', 'Biologie', 'Englisch'];
+  const chipOptions = ['Deutsch', 'Sachunterricht', 'Religion', 'Englisch'];
 
   return (
     <main className={styles.content}>

@@ -5,8 +5,13 @@ import textStyles from '../../../styles/text-styles.module.css';
 import ToggleSwitch from '../../ToggleSwitch/ToggleSwitch';
 
 function ContentSozialform({ formData, handleInputChange }) {
-  // Define sample chip options for social forms.
-  const chipOptions = ['Einzelarbeit', 'Partnerarbeit', 'Gruppenarbeit', 'Plenum'];
+  // Updated chip options for social forms (using only the social options from the provided list)
+  const chipOptions = [
+    "Einzelarbeit",
+    "Partnerarbeit",
+    "Gruppenarbeit",
+    "Plenum"
+  ];
 
   return (
     <main className={styles.content}>

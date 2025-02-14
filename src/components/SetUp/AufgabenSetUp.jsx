@@ -48,10 +48,7 @@ function AufgabenSetUp() {
 
   // Modified submit handler.
   const handleSubmit = async (e) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
-    // Build form data for the API call.
+    e.preventDefault();
     const formDataToSend = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       formDataToSend.append(key, value);
@@ -59,22 +56,20 @@ function AufgabenSetUp() {
     try {
       const response = await fetch('/generate-tasks', {
         method: 'POST',
-        body: formDataToSend
+        body: formDataToSend,
       });
       const data = await response.json();
-      
+
       if (data.success) {
-        navigate('/task-summaries', { 
-          state: { 
-            summaries: data.summaries,
-            sessionId: data.session_id
-          }
-        });
+        // Save the generated task(s) in localStorage for TaskDetail to access.
+        localStorage.setItem('generatedTasks', JSON.stringify(data.tasks));
+        // Redirect directly to TaskDetail for the first task (index 0)
+        navigate('/task/direct/0');
       } else {
-        console.error("Error:", data.error);
+        console.error('Error:', data.error);
       }
     } catch (err) {
-      console.error("Error submitting tasks:", err);
+      console.error('Error submitting tasks:', err);
     }
   };
   
